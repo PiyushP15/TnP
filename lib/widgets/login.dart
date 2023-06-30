@@ -150,11 +150,13 @@ class _LoginState extends State<Login> {
                     'Email',
                     obscure:false,
                     cont: emailHandler,
+                    keyboard: TextInputType.emailAddress,
                   ), // Using custom textfield widgets
                   CustomTextField(
                     'Password',
                     obscure:true,
                     cont: passHandler,
+                    keyboard: TextInputType.text,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 20, 50, 10),

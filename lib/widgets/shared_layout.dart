@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:tnp_portal/providers/user_provider.dart';
 import 'package:tnp_portal/widgets/display.dart';
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 import 'package:tnp_portal/widgets/homepage.dart';
 import 'package:tnp_portal/widgets/my_applications.dart';
 import 'package:tnp_portal/widgets/profile.dart';
 
-class SharedLayout extends StatefulWidget {
+class SharedLayout extends ConsumerStatefulWidget {
   const SharedLayout({super.key});
 
   @override
-  State<SharedLayout> createState() {
+  ConsumerState<SharedLayout> createState() {
     return _SharedLayout();
   }
 }
 
-class _SharedLayout extends State<SharedLayout> {
+class _SharedLayout extends ConsumerState<SharedLayout> {
   Widget _currentPage = const Homepage();
 
   void changePage(String page) {
@@ -37,6 +39,7 @@ class _SharedLayout extends State<SharedLayout> {
       });
     }
     if (page == 'logout') {
+      ref.read(userProvider.notifier).resetState();
       setState(() {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const Display()));

@@ -1,31 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:tnp_portal/widgets/custom_text_field.dart';
+import 'package:tnp_portal/providers/user_provider.dart';
 
-class Register extends StatefulWidget {
+const List<String> genders = <String>['Male', 'Female', 'Other'];
+
+class Register extends ConsumerStatefulWidget {
   const Register({super.key, required this.onToggle, required this.onRegister});
 
   final void Function() onToggle;
   final void Function() onRegister;
 
   @override
-  State<Register> createState() {
+  ConsumerState<Register> createState() {
     return _RegisterState();
   }
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterState extends ConsumerState<Register> {
   final nameHandler = TextEditingController();
   final emailHandler = TextEditingController();
   final passHandler = TextEditingController();
   final cPassHandler = TextEditingController();
+  final dobHandler = TextEditingController();
+  final genderHandler = TextEditingController();
+  final sscHandler = TextEditingController();
+  final sscYearHandler = TextEditingController();
+  final hscHandler = TextEditingController();
+  final hscYearHandler = TextEditingController();
+  final gradHandler = TextEditingController();
+  final gradYearHandler = TextEditingController();
+  final sem1Handler = TextEditingController();
+  final sem2Handler = TextEditingController();
+  final sem3Handler = TextEditingController();
+  final sem4Handler = TextEditingController();
+
+  String? genderValue;
 
   void handleSubmit() {
     var userName = nameHandler.text.trim();
     var userEmail = emailHandler.text.trim();
     var userPass = passHandler.text.trim();
     var userCpass = cPassHandler.text.trim();
-    if (userName.isEmpty || userEmail.isEmpty || userPass.isEmpty || userCpass.isEmpty) {
+    var userGender = genderHandler.text.trim();
+    var userDob = dobHandler.text.trim();
+    var userSsc = sscHandler.text.trim();
+    var userSscYear = sscYearHandler.text.trim();
+    var userHsc = hscHandler.text.trim();
+    var userHscYear = hscYearHandler.text.trim();
+    var userGrad = gradHandler.text.trim();
+    var userGradYear = gradYearHandler.text.trim();
+    var userSem1 = sem1Handler.text.trim();
+    var userSem2 = sem2Handler.text.trim();
+    var userSem3 = sem3Handler.text.trim();
+    var userSem4 = sem4Handler.text.trim();
+    if (userName.isEmpty ||
+        userEmail.isEmpty ||
+        userPass.isEmpty ||
+        userCpass.isEmpty ||
+        userGender.isEmpty ||
+        userDob.isEmpty ||
+        userSsc.isEmpty ||
+        userSscYear.isEmpty ||
+        userHsc.isEmpty ||
+        userHscYear.isEmpty ||
+        userGrad.isEmpty ||
+        userGradYear.isEmpty) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -41,8 +83,7 @@ class _RegisterState extends State<Register> {
           ],
         ),
       );
-    }
-    else if (userPass.length <6) {
+    } else if (userPass.length < 6) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -58,8 +99,7 @@ class _RegisterState extends State<Register> {
           ],
         ),
       );
-    }
-    else if(userPass != userCpass){
+    } else if (userPass != userCpass) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -75,14 +115,31 @@ class _RegisterState extends State<Register> {
           ],
         ),
       );
-    }
-    else{
+    } else {
+      final user = ref.watch(userProvider);
+      user['name'] = userName;
+      user['email'] = userEmail;
+      user['password'] = userPass;
+      user['dob'] = userDob;
+      user['gender'] = userGender;
+      user['ssc'] = userSsc;
+      user['ssc_year'] = userSscYear;
+      user['hsc'] = userHsc;
+      user['hsc_year'] = userHscYear;
+      user['grad'] = userGrad;
+      user['grad_year'] = userGradYear;
+      user['sem1'] = userSem1;
+      user['sem2'] = userSem2;
+      user['sem3'] = userSem3;
+      user['sem4'] = userSem4;
+      // print(user);
       widget.onRegister();
     }
   }
 
   @override
   Widget build(context) {
+    final user = ref.watch(userProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -99,9 +156,6 @@ class _RegisterState extends State<Register> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // const SizedBox(
-            //   height: 225,
-            // ),
             Container(
               decoration: const BoxDecoration(
                 boxShadow: [
@@ -125,7 +179,7 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               width: 400,
-              // height: 350,
+              height: 500,
               margin: const EdgeInsets.fromLTRB(
                 20,
                 0,
@@ -150,25 +204,156 @@ class _RegisterState extends State<Register> {
                     color: Color(0XFF0E6BA8),
                     thickness: 2,
                   ),
-                  CustomTextField(
-                    'Name',
-                    obscure:false,
-                    cont: nameHandler,
-                  ), // Using custom textfield widgets
-                  CustomTextField(
-                    'Email',
-                    obscure:false,
-                    cont: emailHandler,
-                  ), // Using custom textfield widgets
-                  CustomTextField(
-                    'Password',
-                    obscure:true,
-                    cont: passHandler,
-                  ),
-                  CustomTextField(
-                    'Confirm Password',
-                    obscure:true,
-                    cont: cPassHandler,
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 1,
+                      padding: const EdgeInsets.all(0),
+                      itemBuilder: (ctx, index) => Column(
+                        children: [
+                          CustomTextField(
+                            'Name',
+                            obscure: false,
+                            cont: nameHandler,
+                            keyboard: TextInputType.text,
+                          ), // Using custom textfield widgets
+                          CustomTextField(
+                            'Email',
+                            obscure: false,
+                            cont: emailHandler,
+                            keyboard: TextInputType.emailAddress,
+                          ), // Using custom textfield widgets
+                          CustomTextField(
+                            'Password',
+                            obscure: true,
+                            cont: passHandler,
+                            keyboard: TextInputType.text,
+                          ),
+                          CustomTextField(
+                            'Confirm Password',
+                            obscure: true,
+                            cont: cPassHandler,
+                            keyboard: TextInputType.text,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 5),
+                            child: TextFormField(
+                              obscureText: false,
+                              controller: dobHandler,
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                labelText: 'DOB',
+                              ),
+                              readOnly: true,
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1980),
+                                    lastDate: DateTime.now());
+
+                                if (pickedDate != null) {
+                                  final user = ref.watch(userProvider);
+                                  // print(pickedDate);
+                                  String formattedDate =
+                                      DateFormat('dd-MM-yyyy')
+                                          .format(pickedDate);
+                                  // print(formattedDate);
+                                  user['dob'] = formattedDate;
+                                  // print(dummyUser['dob']);
+                                  // print(initialUser);
+                                  dobHandler.text = formattedDate;
+                                } else {}
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 5),
+                            child: DropdownButtonFormField<String>(
+                              hint: const Text('Choose Gender'),
+                              value: genderValue,
+                              elevation: 16,
+                              onChanged: (String? value) {
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  genderValue = value!;
+                                  genderHandler.text = genderValue!;
+                                });
+                              },
+                              items: genders.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          CustomTextField(
+                            'SSC %',
+                            obscure: false,
+                            cont: sscHandler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'SSC Year',
+                            obscure: false,
+                            cont: sscYearHandler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'HSC %',
+                            obscure: false,
+                            cont: hscHandler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'HSC Year',
+                            obscure: false,
+                            cont: hscYearHandler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'Graduation %',
+                            obscure: false,
+                            cont: gradHandler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'Graduation Year',
+                            obscure: false,
+                            cont: gradYearHandler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'Sem-1 %',
+                            obscure: false,
+                            cont: sem1Handler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'Sem-2 %',
+                            obscure: false,
+                            cont: sem2Handler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'Sem-3 %',
+                            obscure: false,
+                            cont: sem3Handler,
+                            keyboard: TextInputType.number,
+                          ),
+                          CustomTextField(
+                            'Sem-4 %',
+                            obscure: false,
+                            cont: sem4Handler,
+                            keyboard: TextInputType.number,
+                          ),
+                        ],
+                      ),
+                      // shrinkWrap: true,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 20, 50, 10),
