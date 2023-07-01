@@ -23,6 +23,8 @@ import 'custom_text_field.dart';
 //   'sem4': '-',
 // };
 
+bool isEnabled = false;
+
 const List<String> genders = <String>['Male', 'Female', 'Other'];
 
 class Profile extends ConsumerStatefulWidget {
@@ -38,6 +40,7 @@ class _ProfileState extends ConsumerState<Profile> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
+
     final screenWidth = MediaQuery.of(context).size.width;
     final nameHandler = TextEditingController(text: user['name']);
     final emailHandler = TextEditingController(text: user['email']);
@@ -133,6 +136,18 @@ class _ProfileState extends ConsumerState<Profile> {
       }
     }
 
+    void toggleEdit(bool value) {
+      if (isEnabled == false) {
+        setState(() {
+          isEnabled = true;
+        });
+      } else {
+        setState(() {
+          isEnabled = false;
+        });
+      }
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -153,6 +168,22 @@ class _ProfileState extends ConsumerState<Profile> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        const Text('Edit Profile'),
+                        Switch(
+                          activeColor: Colors.green,
+                          activeTrackColor: Colors.green[200],
+                          inactiveThumbColor: Colors.redAccent,
+                          inactiveTrackColor: Colors.orange,
+                          value: isEnabled,
+                          onChanged: toggleEdit,
+                        ),
+                      ],
+                    ),
+                  ),
                   Column(
                     children: [
                       const Image(
@@ -162,18 +193,21 @@ class _ProfileState extends ConsumerState<Profile> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            XFile? result = await ImagePicker.platform
-                                .getImage(source: ImageSource.gallery);
-                            if (result != null) {
-                              // File file = File(result.files.single.path);
-                              print('path is ${result.path}');
-                            } else {
-                              print("No file selected");
-                            }
-                          },
-                          child: const Text('Change Picture'),
+                        child: IgnorePointer(
+                          ignoring: !isEnabled,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              XFile? result = await ImagePicker.platform
+                                  .getImage(source: ImageSource.gallery);
+                              if (result != null) {
+                                // File file = File(result.files.single.path);
+                                print('path is ${result.path}');
+                              } else {
+                                print("No file selected");
+                              }
+                            },
+                            child: const Text('Change Picture'),
+                          ),
                         ),
                       ),
                       const Padding(
@@ -195,6 +229,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: nameHandler,
                               keyboard: TextInputType.text,
+                              isEnabled: isEnabled,
                             ),
                           ),
                           Expanded(
@@ -203,6 +238,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: emailHandler,
                               keyboard: TextInputType.emailAddress,
+                              isEnabled: isEnabled,
                             ),
                           ),
                         ],
@@ -214,6 +250,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 5),
                               child: TextFormField(
+                                enabled: isEnabled,
                                 obscureText: false,
                                 controller: dobHandler,
                                 decoration: const InputDecoration(
@@ -247,23 +284,27 @@ class _ProfileState extends ConsumerState<Profile> {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 0),
-                              child: DropdownButtonFormField<String>(
-                                value: user['gender'],
-                                elevation: 16,
-                                onChanged: (String? value) {
-                                  // This is called when the user selects an item.
-                                  setState(() {
-                                    user['gender'] = value!;
-                                    genderHandler.text = user['gender']!;
-                                  });
-                                },
-                                items: genders.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
+                              child: IgnorePointer(
+                                ignoring: !isEnabled,
+                                child: DropdownButtonFormField<String>(
+                                  enableFeedback: isEnabled,
+                                  value: user['gender'],
+                                  elevation: 16,
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      user['gender'] = value!;
+                                      genderHandler.text = user['gender']!;
+                                    });
+                                  },
+                                  items: genders.map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
                           ),
@@ -288,6 +329,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: sscHandler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                           Expanded(
@@ -296,6 +338,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: sscYearHandler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                         ],
@@ -308,6 +351,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: hscHandler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                           Expanded(
@@ -316,6 +360,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: hscYearHandler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                         ],
@@ -328,6 +373,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: gradHandler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                           Expanded(
@@ -336,6 +382,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: gradYearHandler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                         ],
@@ -348,6 +395,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: sem1Handler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                           Expanded(
@@ -356,6 +404,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: sem2Handler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                         ],
@@ -368,6 +417,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: sem3Handler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                           Expanded(
@@ -376,6 +426,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               obscure: false,
                               cont: sem4Handler,
                               keyboard: TextInputType.number,
+                              isEnabled: isEnabled,
                             ),
                           ),
                         ],
@@ -385,10 +436,13 @@ class _ProfileState extends ConsumerState<Profile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Center(
-                            child: ElevatedButton(
-                              onPressed: onUpdate,
-                              child: const Text('Update Profile',
-                                  style: TextStyle(fontSize: 16)),
+                            child: IgnorePointer(
+                              ignoring: !isEnabled,
+                              child: ElevatedButton(
+                                onPressed: onUpdate,
+                                child: const Text('Update Profile',
+                                    style: TextStyle(fontSize: 16)),
+                              ),
                             ),
                           ),
                         ],

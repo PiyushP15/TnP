@@ -6,7 +6,7 @@ class Login extends StatefulWidget {
   const Login({super.key, required this.onToggle, required this.onLogin});
 
   final void Function() onToggle;
-  final void Function() onLogin;
+  final void Function(Map<String,String> user) onLogin;
 
   @override
   State<Login> createState() {
@@ -73,7 +73,8 @@ class _LoginState extends State<Login> {
       );
     }
     else if(userEmail==userPass){
-      widget.onLogin();
+      final user = {'email':userEmail,'pass':userPass};
+      widget.onLogin(user);
     }
   }
 
