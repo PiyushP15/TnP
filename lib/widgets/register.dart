@@ -1,6 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Packages for backend
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:tnp_portal/widgets/custom_text_field.dart';
 import 'package:tnp_portal/providers/user_provider.dart';
@@ -20,6 +26,8 @@ class Register extends ConsumerStatefulWidget {
 }
 
 class _RegisterState extends ConsumerState<Register> {
+  final url =
+      Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
   final nameHandler = TextEditingController();
   final emailHandler = TextEditingController();
   final passHandler = TextEditingController();
@@ -39,7 +47,7 @@ class _RegisterState extends ConsumerState<Register> {
 
   String? genderValue;
 
-  void handleSubmit() {
+  void handleSubmit() async {
     var userName = nameHandler.text.trim();
     var userEmail = emailHandler.text.trim();
     var userPass = passHandler.text.trim();
@@ -56,7 +64,40 @@ class _RegisterState extends ConsumerState<Register> {
     var userSem2 = sem2Handler.text.trim();
     var userSem3 = sem3Handler.text.trim();
     var userSem4 = sem4Handler.text.trim();
-    if (userName.isEmpty ||
+
+    final getResponse = await http.get(url);
+    final List _mails = [];
+    final Map allData = json.decode(getResponse.body);
+    for (final i in allData.entries) {
+      _mails.add(i.value['email']);
+    }
+    print(_mails);
+    var flag = 0;
+    for (final e in _mails) {
+      if (userEmail == e) {
+        flag = 1;
+        break;
+      }
+    }
+    print(flag);
+
+    if (flag == 1) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Email'),
+          content: const Text('Email already used! Use another mail.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+    } else if (userName.isEmpty ||
         userEmail.isEmpty ||
         userPass.isEmpty ||
         userCpass.isEmpty ||
@@ -116,23 +157,30 @@ class _RegisterState extends ConsumerState<Register> {
         ),
       );
     } else {
-      final user = ref.watch(userProvider);
-      user['name'] = userName;
-      user['email'] = userEmail;
-      user['password'] = userPass;
-      user['dob'] = userDob;
-      user['gender'] = userGender;
-      user['ssc'] = userSsc;
-      user['ssc_year'] = userSscYear;
-      user['hsc'] = userHsc;
-      user['hsc_year'] = userHscYear;
-      user['grad'] = userGrad;
-      user['grad_year'] = userGradYear;
-      user['sem1'] = userSem1;
-      user['sem2'] = userSem2;
-      user['sem3'] = userSem3;
-      user['sem4'] = userSem4;
-      // print(user);
+      final postResponse = await http.post(
+        url,
+        headers: {'Cotent-Type': 'application/json'},
+        body: json.encode(
+          {
+            'name': userName,
+            'email': userEmail,
+            'password': userPass,
+            'dob': userDob,
+            'gender': userGender,
+            'ssc': userSsc,
+            'ssc_year': userSscYear,
+            'hsc': userHsc,
+            'hsc_year': userHscYear,
+            'grad': userGrad,
+            'grad_year': userGradYear,
+            'sem1': userSem1,
+            'sem2': userSem2,
+            'sem3': userSem3,
+            'sem4': userSem4
+          },
+        ),
+      );
+
       widget.onRegister();
     }
   }
