@@ -3,22 +3,24 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tnp_portal/providers/user_provider.dart';
 
 import 'package:tnp_portal/widgets/custom_text_field.dart';
 
-class Login extends StatefulWidget {
+class Login extends ConsumerStatefulWidget {
   const Login({super.key, required this.onToggle, required this.onLogin});
 
   final void Function() onToggle;
-  final void Function(Map<String, String> user) onLogin;
+  final void Function(String email) onLogin;
 
   @override
-  State<Login> createState() {
+  ConsumerState<Login> createState() {
     return _LoginState();
   }
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ConsumerState<Login> {
   final url =
       Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
   final emailHandler = TextEditingController();
@@ -104,8 +106,9 @@ class _LoginState extends State<Login> {
         ),
       );
     } else if (checkpass == userPass) {
-      final user = {'email': userEmail, 'pass': userPass};
-      widget.onLogin(user);
+      
+      final email = userEmail;
+      widget.onLogin(email);
     }
   }
 

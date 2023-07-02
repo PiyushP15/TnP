@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:tnp_portal/widgets/admin/admin_layout.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:tnp_portal/widgets/login.dart';
 import 'package:tnp_portal/widgets/register.dart';
 import 'package:tnp_portal/widgets/shared_layout.dart';
 
-class Display extends StatefulWidget {
+import '../providers/user_provider.dart';
+
+class Display extends ConsumerStatefulWidget {
   const Display({super.key});
 
   @override
-  State<Display> createState() {
+  ConsumerState<Display> createState() {
     return _DisplayState();
   }
 }
 
-class _DisplayState extends State<Display> {
+class _DisplayState extends ConsumerState<Display> {
   var activeScreen = 'login';
 
   void switchScreen() {
@@ -27,11 +30,13 @@ class _DisplayState extends State<Display> {
     });
   }
 
-  void handleLogin(Map<String, String> user) {
-    if (user['email'] == 'admin.tnp@gmail.com') {
+  void handleLogin(String email) {
+    if (email == 'admin.tnp@gmail.com') {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const AdminLayout()));
     } else {
+      final user = ref.watch(userProvider);
+      user['email'] = email;
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const SharedLayout()));
     }
@@ -39,7 +44,7 @@ class _DisplayState extends State<Display> {
 
   void handleRegister() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const SharedLayout()));
+        context, MaterialPageRoute(builder: (context) => Login(onToggle: switchScreen,onLogin: handleLogin,)));
   }
 
   @override
