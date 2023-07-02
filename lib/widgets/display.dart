@@ -43,8 +43,7 @@ class _DisplayState extends ConsumerState<Display> {
   }
 
   void handleRegister() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Login(onToggle: switchScreen,onLogin: handleLogin,)));
+    switchScreen();
   }
 
   @override
