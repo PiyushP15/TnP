@@ -3,7 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tnp_portal/providers/user_provider.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'custom_text_field.dart';
 
 // final dummyUser = {

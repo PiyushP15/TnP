@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import 'package:tnp_portal/widgets/custom_text_field.dart';
@@ -6,7 +10,7 @@ class Login extends StatefulWidget {
   const Login({super.key, required this.onToggle, required this.onLogin});
 
   final void Function() onToggle;
-  final void Function(Map<String,String> user) onLogin;
+  final void Function(Map<String, String> user) onLogin;
 
   @override
   State<Login> createState() {
@@ -15,13 +19,43 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final url =
+      Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
   final emailHandler = TextEditingController();
   final passHandler = TextEditingController();
 
-  void handleSubmit(String text) {
+  Future<void> handleSubmit(String text) async {
     var userEmail = emailHandler.text.trim();
     var userPass = passHandler.text.trim();
-    if (userEmail.isEmpty || userPass.isEmpty) {
+    var checkpass = '';
+    final getResponse = await http.get(url);
+    var flag = 0;
+    final Map allData = json.decode(getResponse.body);
+    for (final i in allData.entries) {
+      if (userEmail == i.value['email']) {
+        flag = 1;
+        checkpass = i.value['password'];
+        break;
+      }
+    }
+
+    if (flag == 0) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Email'),
+          content: const Text('Email does not exist'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+    } else if (userEmail.isEmpty || userPass.isEmpty) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -29,16 +63,15 @@ class _LoginState extends State<Login> {
           content: const Text('Enter All Credentials!'),
           actions: [
             TextButton(
-              onPressed: ( ) { 
+              onPressed: () {
                 Navigator.pop(ctx);
-              } , 
+              },
               child: const Text('Okay'),
-              ),
+            ),
           ],
         ),
       );
-    }
-    else if (userPass.length <6) {
+    } else if (userPass.length < 6) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -54,8 +87,7 @@ class _LoginState extends State<Login> {
           ],
         ),
       );
-    }
-    else if (userPass != userEmail) {
+    } else if (userPass != checkpass) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -71,9 +103,8 @@ class _LoginState extends State<Login> {
           ],
         ),
       );
-    }
-    else if(userEmail==userPass){
-      final user = {'email':userEmail,'pass':userPass};
+    } else if (checkpass == userPass) {
+      final user = {'email': userEmail, 'pass': userPass};
       widget.onLogin(user);
     }
   }
@@ -149,13 +180,13 @@ class _LoginState extends State<Login> {
                   ),
                   CustomTextField(
                     'Email',
-                    obscure:false,
+                    obscure: false,
                     cont: emailHandler,
                     keyboard: TextInputType.emailAddress,
                   ), // Using custom textfield widgets
                   CustomTextField(
                     'Password',
-                    obscure:true,
+                    obscure: true,
                     cont: passHandler,
                     keyboard: TextInputType.text,
                   ),

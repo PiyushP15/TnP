@@ -71,7 +71,7 @@ class _RegisterState extends ConsumerState<Register> {
     for (final i in allData.entries) {
       _mails.add(i.value['email']);
     }
-    print(_mails);
+
     var flag = 0;
     for (final e in _mails) {
       if (userEmail == e) {
@@ -79,7 +79,6 @@ class _RegisterState extends ConsumerState<Register> {
         break;
       }
     }
-    print(flag);
 
     if (flag == 1) {
       showDialog(
