@@ -30,7 +30,7 @@ class _DisplayState extends ConsumerState<Display> {
     });
   }
 
-  void handleLogin(String email) {
+  void handleLogin(email) {
     if (email == 'admin.tnp@gmail.com') {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const AdminLayout()));
@@ -43,7 +43,13 @@ class _DisplayState extends ConsumerState<Display> {
   }
 
   void handleRegister() {
-    switchScreen();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Login(
+                  onToggle: switchScreen,
+                  onLogin: handleLogin,
+                )));
   }
 
   @override

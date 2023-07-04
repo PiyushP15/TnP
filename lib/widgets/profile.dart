@@ -7,23 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'custom_text_field.dart';
 
-// final dummyUser = {
-//   'name': 'Sarvesh',
-//   'email': 'sarvesh@gmail.com',
-//   'dob': '19-11-2000',
-//   'gender': 'Male',
-//   'ssc': 83,
-//   'ssc_year': 2017,
-//   'hsc': 72,
-//   'hsc_year': 2019,
-//   'grad': 93.50,
-//   'grad_year': 2022,
-//   'sem1': 90,
-//   'sem2': '-',
-//   'sem3': '-',
-//   'sem4': '-',
-// };
-
 bool isEnabled = false;
 
 const List<String> genders = <String>['Male', 'Female', 'Other'];
@@ -38,6 +21,9 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<Profile> {
+  final url =
+      Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
@@ -57,9 +43,6 @@ class _ProfileState extends ConsumerState<Profile> {
     final sem2Handler = TextEditingController(text: user['sem2']);
     final sem3Handler = TextEditingController(text: user['sem3']);
     final sem4Handler = TextEditingController(text: user['sem4']);
-    // var _list = dummyUser.values.toList();
-    // print(user[0].value);
-    // String genderValue = genders.first;
 
     void onUpdate() {
       var userName = nameHandler.text.trim();
@@ -117,7 +100,47 @@ class _ProfileState extends ConsumerState<Profile> {
         user['sem2'] = userSem2;
         user['sem3'] = userSem3;
         user['sem4'] = userSem4;
-        // print(user);
+
+        Future<void> getdata() async {
+          final url = Uri.https(
+              'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+
+          final getResponse = await http.get(url);
+          final Map allData = json.decode(getResponse.body);
+          for (final i in allData.entries) {
+            if (user['email'] == i.value['email']) {
+              final id = i.key;
+              print(id);
+              final urlupdate = Uri.https(
+                  'tnp-portal-2023-default-rtdb.firebaseio.com',
+                  'register/$id.json');
+
+              final checkresp = await http.get(urlupdate);
+              final Map allData = json.decode(checkresp.body);
+              print(allData);
+
+              await http.patch(urlupdate,
+                  body: json.encode({
+                    'name': userName,
+                    'email': userEmail,
+                    'dob': userDob,
+                    'gender': userGender,
+                    'ssc': userSsc,
+                    'ssc_year': userSscYear,
+                    'hsc': userHsc,
+                    'hsc_year': userHscYear,
+                    'grad': userGrad,
+                    'grad_year': userGradYear,
+                    'sem1': userSem1,
+                    'sem2': userSem2,
+                    'sem3': userSem3,
+                    'sem4': userSem4,
+                  }));
+            }
+          }
+        }
+
+        getdata();
 
         showDialog(
           context: context,
