@@ -28,6 +28,7 @@ class _LoginState extends ConsumerState<Login> {
 
   void _setuserDetails() async {
     Map<dynamic, dynamic> user = ref.watch(userProvider);
+    // Where is User1 used??
     var user1 = {};
     final url = Uri.https(
         'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
