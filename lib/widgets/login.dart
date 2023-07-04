@@ -28,13 +28,12 @@ class _LoginState extends ConsumerState<Login> {
 
   void _setuserDetails() async {
     Map<dynamic, dynamic> user = ref.watch(userProvider);
-    // Where is User1 used??
-    var user1 = {};
+
     final url = Uri.https(
         'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
     final getResponse = await http.get(url);
     final Map allData = json.decode(getResponse.body);
-    print("Printing values");
+
     for (final i in allData.entries) {
       if (user['email'] == i.value['email']) {
         user['name'] = i.value['name'];
@@ -50,20 +49,10 @@ class _LoginState extends ConsumerState<Login> {
         user['sem2'] = i.value['sem2'];
         user['sem3'] = i.value['sem3'];
         user['sem4'] = i.value['sem4'];
-        print(i.value['email']);
-        print(i.value['name']);
-        print(i.value['dob']);
-        print(i.value['gender']);
-        print(i.value['hsc']);
-        print(i.value['ssc']);
-        print(i.value['grad']);
-        print(i.value['sem1']);
-        print(i.value['sem4']);
 
         break;
       }
     }
-    print("Printing values");
   }
 
   Future<void> handleSubmit(String text) async {
@@ -148,10 +137,8 @@ class _LoginState extends ConsumerState<Login> {
     } else if (checkpass == userPass) {
       final email = userEmail;
 
-//
       _setuserDetails();
 
-//
       widget.onLogin(email);
     }
   }

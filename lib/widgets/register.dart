@@ -66,14 +66,14 @@ class _RegisterState extends ConsumerState<Register> {
     var userSem4 = sem4Handler.text.trim();
 
     final getResponse = await http.get(url);
-    final List _mails = [];
+    final List mails = [];
     final Map allData = json.decode(getResponse.body);
     for (final i in allData.entries) {
-      _mails.add(i.value['email']);
+      mails.add(i.value['email']);
     }
 
     var flag = 0;
-    for (final e in _mails) {
+    for (final e in mails) {
       if (userEmail == e) {
         flag = 1;
         break;
@@ -156,7 +156,7 @@ class _RegisterState extends ConsumerState<Register> {
         ),
       );
     } else {
-      final postResponse = await http.post(
+      await http.post(
         url,
         headers: {'Cotent-Type': 'application/json'},
         body: json.encode(
@@ -186,7 +186,6 @@ class _RegisterState extends ConsumerState<Register> {
 
   @override
   Widget build(context) {
-    final user = ref.watch(userProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(

@@ -1,48 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tnp_portal/providers/job_provider.dart';
 import 'package:tnp_portal/models/all_jobs.dart';
 import 'package:tnp_portal/widgets/all_jobs_list.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class Homepage extends ConsumerStatefulWidget{
+class Homepage extends ConsumerStatefulWidget {
   const Homepage({super.key});
-  
+
   @override
   ConsumerState<Homepage> createState() {
     return _Homepage();
   }
-
-
 }
 
-class _Homepage extends ConsumerState<Homepage>{
+//After login its not working... user must click on homepage from navigation to get data
+class _Homepage extends ConsumerState<Homepage> {
+  List<AllJobs> jobs = [];
+  @override
+  void initState() {
+    super.initState();
+    getjobs();
+  }
 
-  final List<AllJobs> _jobs = [
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-    AllJobs(companyName: 'TCS',title: 'SDE 1', desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas quos cumque, ad fugiat pariatur officiis, deleniti quisquam, natus inventore non amet incidunt architecto qui? Fugit vitae provident odit aut, reprehenderit, quis aspernatur illo voluptatem mollitia est iste laboriosam ratione ducimus harum et vel tenetur, ea esse laudantium magni quidem exercitationem!'),
-  ];
+  Future<void> getjobs() async {
+    final url =
+        Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+    final getResponse = await http.get(url);
+    final Map getData = json.decode(getResponse.body);
+    for (final x in getData.entries) {
+      final cname = x.value['cname'];
+      final des = x.value['description'];
+      final pos = x.value['position'];
+      jobs.add(AllJobs(companyName: cname, title: des, desc: pos));
+    }
+  }
 
   @override
-  Widget build(context){
-    //Made to set the 
-    final jobs = ref.watch(jobProvider);
-    // Here we will set jobs equal to the fetched jobs
-
-    // Fetch All Jobs As A List Here In allJobs (You Can Do It Above As Well, Must Be triggered Everytime The Widget Is Called.)
-    // final List<Map<String,String>> fetchedJobs = []; 
-
+  Widget build(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      // change from dummy to fetched jobs
-      child: AllJobsList(allJobs: _jobs),
+      child: AllJobsList(allJobs: jobs),
     );
     // ListView.builder(itemCount: _jobs.length , itemBuilder: (ctx, index)=> Text(_jobs[index].title));
   }

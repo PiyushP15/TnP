@@ -110,14 +110,9 @@ class _ProfileState extends ConsumerState<Profile> {
           for (final i in allData.entries) {
             if (user['email'] == i.value['email']) {
               final id = i.key;
-              print(id);
               final urlupdate = Uri.https(
                   'tnp-portal-2023-default-rtdb.firebaseio.com',
                   'register/$id.json');
-
-              final checkresp = await http.get(urlupdate);
-              final Map allData = json.decode(checkresp.body);
-              print(allData);
 
               await http.patch(urlupdate,
                   body: json.encode({
@@ -221,6 +216,7 @@ class _ProfileState extends ConsumerState<Profile> {
                           ignoring: !isEnabled,
                           child: ElevatedButton(
                             onPressed: () async {
+                              //Is this working?
                               XFile? result = await ImagePicker.platform
                                   .getImage(source: ImageSource.gallery);
                               if (result != null) {
