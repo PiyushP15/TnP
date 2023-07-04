@@ -28,6 +28,17 @@ class AdminHomepage extends StatelessWidget {
           Text('Total Number Of Registered Users: $students'),
           Text('Total Number Of Jobs Posted: $jobs'),
           Text('Total Number Of Applications: $applications'),
+          const SizedBox(height: 20,),
+          Text(
+            'NOTE',
+            style: TextStyle(fontSize: 42, fontWeight: FontWeight.w700,color: Colors.grey.withOpacity(0.4)),
+            
+          ),
+          Text(
+            'The Admin Dashboard is disabled as off now!',
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700,color: Colors.grey.withOpacity(0.4)),
+            
+          ),
         ]),
       );
   }

@@ -10,7 +10,6 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboard;
   final bool? isEnabled;
   
-  
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
@@ -41,3 +40,4 @@ class _CustomTextFieldState extends State<CustomTextField>{
     );
   }
 }
+

@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.18.1
   flutter_riverpod: ^2.3.6
   http: ^0.13.6
+  text_area: ^0.0.3
 
 dev_dependencies:
   flutter_test:
