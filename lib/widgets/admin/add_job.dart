@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:text_area/text_area.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:tnp_portal/widgets/custom_text_field.dart';
 
 class AddJob extends StatelessWidget {
@@ -9,17 +11,26 @@ class AddJob extends StatelessWidget {
   Widget build(context) {
     final nameHandler = TextEditingController();
     final positionHandler = TextEditingController();
-    final descriptionHandler = TextEditingController(text: 'Enter Job Description Here');
+    final descriptionHandler =
+        TextEditingController(text: 'Enter Job Description Here');
 
-    void onSubmit() {
+    Future<void> onSubmit() async {
       final name = nameHandler.text;
       final position = positionHandler.text;
       final description = descriptionHandler.text;
 
       if (name.isEmpty || position.isEmpty || description.isEmpty) {
         print('Empty');
-      }
-      else{
+      } else {
+        final myurl = Uri.https(
+            'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+        await http.post(myurl,
+            headers: {'Cotent-Type': 'application/json'},
+            body: json.encode({
+              'cname': name,
+              'position': position,
+              'description': description,
+            }));
         print(name);
         print(position);
         print(description);
@@ -71,12 +82,11 @@ class AddJob extends StatelessWidget {
                 minLines: 5,
                 maxLines: 25,
                 // expands: true,
-              
               ),
             ),
           ),
           ElevatedButton(
-            onPressed: onSubmit, 
+            onPressed: onSubmit,
             child: const Text('Post Job'),
           ),
         ],
