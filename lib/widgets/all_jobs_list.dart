@@ -1,17 +1,53 @@
-import 'package:flutter/material.dart';
-import 'package:tnp_portal/models/all_jobs.dart';
+import 'dart:convert';
 
-class AllJobsList extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tnp_portal/models/all_jobs.dart';
+import 'package:http/http.dart' as http;
+import 'package:tnp_portal/providers/user_provider.dart';
+
+class AllJobsList extends ConsumerWidget {
   const AllJobsList({super.key, required this.allJobs});
 
   final List<AllJobs> allJobs;
 
   @override
-  Widget build(context) {
+  Widget build(context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
 
-    if(allJobs.isEmpty){
+    Future<void> apply(String cName) async {
+      List temp = ['a'];
+      final url =
+          Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+
+      final getResponse = await http.get(url);
+
+      final Map allData = json.decode(getResponse.body);
+      for (final i in allData.entries) {
+        if (cName == i.value['cname']) {
+          for (final x in i.value['applicants']) {
+            temp.add(x);
+          }
+        }
+      }
+      for (final i in allData.entries) {
+        if (cName == i.value['cname']) {
+          final id = i.key;
+          final user = ref.watch(userProvider);
+
+          final urlupdate = Uri.https(
+              'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
+          temp.add(user['name']);
+          await http.patch(urlupdate,
+              body: json.encode({
+                'applicants': temp,
+              }));
+        }
+      }
+    }
+
+    if (allJobs.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -24,8 +60,9 @@ class AllJobsList extends StatelessWidget {
                   child: Text(
                     'No Jobs To Display As Of Now',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
-                    ),
+                    style: TextStyle(
+                        fontSize: 50, color: Colors.grey.withOpacity(0.5)),
+                  ),
                 ),
               ],
             ),
@@ -87,7 +124,7 @@ class AllJobsList extends StatelessWidget {
                     ),
                     onPressed: () {
                       showModalBottomSheet(
-                        backgroundColor:const Color(0XFFFAA916),
+                        backgroundColor: const Color(0XFFFAA916),
                         context: context,
                         builder: (BuildContext context) {
                           return SizedBox(
@@ -101,36 +138,51 @@ class AllJobsList extends StatelessWidget {
                                   children: [
                                     const Text(
                                       'Company Name:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].companyName,
-                                      style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const Text(
                                       'Position:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].title,
-                                      style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const Text(
                                       'Job Description:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Expanded(
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: Text(
                                           allJobs[index].desc,
-                                          style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                          style: const TextStyle(
+                                              color: Color(0xFFFFFFFF),
+                                              fontSize: 16),
                                         ),
                                       ),
                                     ),
@@ -138,20 +190,27 @@ class AllJobsList extends StatelessWidget {
                                       height: 20,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         ElevatedButton(
                                           child: const Text('Close'),
                                           onPressed: () =>
                                               Navigator.pop(context),
                                         ),
-                                        const SizedBox(width: 10,),
-                                        ElevatedButton(
-                                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green)),
-                                          child: const Text('Apply'),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
+                                        const SizedBox(
+                                          width: 10,
                                         ),
+                                        ElevatedButton(
+                                            style: const ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        Colors.green)),
+                                            child: const Text('Apply'),
+                                            onPressed: () {
+                                              apply(allJobs[index].companyName);
+                                              Navigator.pop(context);
+                                            }),
                                       ],
                                     )
                                   ],

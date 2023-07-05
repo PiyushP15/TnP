@@ -37,7 +37,7 @@ class AddJob extends StatelessWidget {
         );
         return;
       } else {
-        final appl=['a','b'];
+        final appl = ['a'];
         final myurl = Uri.https(
             'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
         await http.post(myurl,
@@ -46,7 +46,7 @@ class AddJob extends StatelessWidget {
               'cname': name,
               'position': position,
               'description': description,
-              'applicants':appl,
+              'applicants': appl,
             }));
       }
     }
@@ -103,10 +103,10 @@ class AddJob extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: (){
+            onPressed: () {
               onSubmit();
               Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const AdminLayout() ));
+                  MaterialPageRoute(builder: (context) => const AdminLayout()));
             },
             child: const Text('Post Job'),
           ),
