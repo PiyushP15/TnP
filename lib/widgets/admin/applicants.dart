@@ -68,6 +68,7 @@ class _ApplicantsState extends ConsumerState<Applicants> {
               final sem2 = data.value['sem2'];
               final sem3 = data.value['sem3'];
               final sem4 = data.value['sem4'];
+              final isRestricted = data.value['isRestricted'];
               // if (email == 'admin.tnp@gmail.com') {
               //   continue;
               // }
@@ -86,6 +87,7 @@ class _ApplicantsState extends ConsumerState<Applicants> {
                 sem2: sem2,
                 sem3: sem3,
                 sem4: sem4,
+                isRestricted: isRestricted,
               ));
             }
           }

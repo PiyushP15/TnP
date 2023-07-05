@@ -35,7 +35,7 @@ class _LoginState extends ConsumerState<Login> {
     final Map allData = json.decode(getResponse.body);
 
     for (final i in allData.entries) {
-      if (user['email'] == i.value['email']) {
+      if (user['email'] == i.value['email'] && user['isRestricted']=='false') {
         user['name'] = i.value['name'];
         user['dob'] = i.value['dob'];
         user['gender'] = i.value['gender'];
@@ -61,11 +61,13 @@ class _LoginState extends ConsumerState<Login> {
     var checkpass = '';
     final getResponse = await http.get(url);
     var flag = 0;
+    var restrict = 'false';
     final Map allData = json.decode(getResponse.body);
     for (final i in allData.entries) {
       if (userEmail == i.value['email']) {
         flag = 1;
         checkpass = i.value['password'];
+        restrict=i.value['isRestricted'];
         break;
       }
     }
@@ -134,7 +136,25 @@ class _LoginState extends ConsumerState<Login> {
           ],
         ),
       );
-    } else if (checkpass == userPass) {
+    } 
+    else if(restrict == 'true'){
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Login Error'),
+          content: const Text('Your Account Has Been Restricted! Contact Admin For Further Details.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+    }
+    else if (checkpass == userPass) {
       final email = userEmail;
 
       _setuserDetails();

@@ -6,6 +6,10 @@ class AllStudentsList extends StatelessWidget {
 
   final List<AllStudents> allStuds;
 
+  void restrictUser(String email){
+    print(email);
+  }
+
   @override
   Widget build(context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -381,9 +385,13 @@ class AllStudentsList extends StatelessWidget {
                                                   backgroundColor:
                                                       MaterialStatePropertyAll(
                                                           Colors.green)),
-                                              child: const Text('Restrict User'),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
+                                              child:
+                                                  const Text('Restrict User'),
+                                              onPressed: () {
+                                                  Navigator.pop(context);
+                                                  restrictUser(allStuds[index].email);
+                                              }
+                                                  ,
                                             ),
                                           ],
                                         )

@@ -18,6 +18,7 @@ class UserNotifier extends StateNotifier<Map<String, String>> {
           'sem2': '',
           'sem3': '',
           'sem4': '',
+          'isRestricted': '',
         });
 
   void resetState() {
@@ -36,7 +37,8 @@ class UserNotifier extends StateNotifier<Map<String, String>> {
       'sem1': '',
       'sem2': '',
       'sem3': '',
-      'sem4': ''
+      'sem4': '',
+      'isRestricted': '',
     };
   }
 }

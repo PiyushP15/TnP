@@ -17,7 +17,9 @@ class AllStudents {
       required this.sem1,
       required this.sem2,
       required this.sem3,
-      required this.sem4})
+      required this.sem4,
+      required this.isRestricted,
+      })
       : id = uuid.v4();
 
   final String id;
@@ -35,4 +37,5 @@ class AllStudents {
   final String sem3;
   final String sem4;
   final String email;
+  final String isRestricted;
 }

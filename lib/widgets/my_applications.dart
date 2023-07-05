@@ -57,7 +57,7 @@ class _MyApplicationsState extends ConsumerState<MyApplications> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(context) { 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AllJobsList(allJobs: jobs),

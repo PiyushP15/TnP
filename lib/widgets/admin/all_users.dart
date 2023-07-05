@@ -46,6 +46,7 @@ class _AllUsersState extends ConsumerState<AllUsers> {
       final sem2 = x.value['sem2'];
       final sem3 = x.value['sem3'];
       final sem4 = x.value['sem4'];
+      final isRestricted = x.value['isRestricted'];
       if (email == 'admin.tnp@gmail.com') {
         continue;
       }
@@ -64,6 +65,7 @@ class _AllUsersState extends ConsumerState<AllUsers> {
         sem2: sem2,
         sem3: sem3,
         sem4: sem4,
+        isRestricted: isRestricted,
       ));
     }
 

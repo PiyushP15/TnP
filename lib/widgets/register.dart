@@ -228,7 +228,8 @@ class _RegisterState extends ConsumerState<Register> {
             'sem1': userSem1,
             'sem2': userSem2,
             'sem3': userSem3,
-            'sem4': userSem4
+            'sem4': userSem4,
+            'isRestricted': false,
           },
         ),
       );
