@@ -11,7 +11,7 @@ class AllStudentsList extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
 
-    if(allStuds.isEmpty){
+    if (allStuds.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -23,8 +23,9 @@ class AllStudentsList extends StatelessWidget {
                 Text(
                   'No Students Yet',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
-                  ),
+                  style: TextStyle(
+                      fontSize: 50, color: Colors.grey.withOpacity(0.5)),
+                ),
               ],
             ),
           ],
@@ -46,24 +47,24 @@ class AllStudentsList extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Text(
-                  '${allStuds[index].name}(${allStuds[index].email})',
-                  style: const TextStyle(
-                    color: Color(0xFF96031A),
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Text(
+                      '${allStuds[index].name}(${allStuds[index].email})',
+                      style: const TextStyle(
+                        color: Color(0xFF96031A),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const Spacer(),
-              ElevatedButton(
+                  const Spacer(),
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF0E6BA8),
                     ),
                     onPressed: () {
                       showModalBottomSheet(
-                        backgroundColor:const Color(0XFFFAA916),
+                        backgroundColor: const Color(0XFFFAA916),
                         context: context,
                         builder: (BuildContext context) {
                           return SizedBox(
@@ -74,18 +75,24 @@ class AllStudentsList extends StatelessWidget {
                                     horizontal: 30, vertical: 10),
                                 child: SingleChildScrollView(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           const Text(
-                                        'Name:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].name,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Name:            ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].name,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -94,13 +101,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Email:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].email,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Email:            ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].email,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -109,13 +121,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Gender:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].gender,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Gender:         ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].gender,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -124,13 +141,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'DOB:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].dob,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'DOB:              ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].dob,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -139,13 +161,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'SSC:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].ssc,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'SSC:              ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].ssc,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -154,13 +181,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'SSC Year:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].ssc_year,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'SSC Year:     ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].ssc_year,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -169,13 +201,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'HSC:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].hsc,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'HSC:              ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].hsc,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -184,13 +221,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'HSC Year:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].hsc_year,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'HSC Year:     ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].hsc_year,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -199,13 +241,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Grad:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].grad,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Grad:             ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].grad,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -214,13 +261,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Grad Year:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].grad_year,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Grad Year:    ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].grad_year,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -229,13 +281,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Sem 1:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].sem1,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Sem 1:         ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].sem1,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -244,13 +301,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Sem 2:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].sem2,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Sem 2:         ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].sem2,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -259,13 +321,18 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Sem 3:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].sem3,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Sem 3:         ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].sem3,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -274,29 +341,40 @@ class AllStudentsList extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Text(
-                                        'Sem 4:',
-                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        allStuds[index].sem4,
-                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-                                      ),
+                                            'Sem 4:         ',
+                                            style: TextStyle(
+                                                color: Color(0xFF96031A),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            allStuds[index].sem4,
+                                            style: const TextStyle(
+                                                color: Color(0xFFFFFFFF),
+                                                fontSize: 16),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           ElevatedButton(
                                             child: const Text('Close'),
                                             onPressed: () =>
                                                 Navigator.pop(context),
                                           ),
-                                          const SizedBox(width: 10,),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
                                           ElevatedButton(
-                                            style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green)),
+                                            style: const ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        Colors.green)),
                                             child: const Text('Restrict User'),
                                             onPressed: () =>
                                                 Navigator.pop(context),
@@ -317,11 +395,11 @@ class AllStudentsList extends StatelessWidget {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
-              const SizedBox(
-                height: 5,
-              )
+                  const SizedBox(
+                    height: 5,
+                  )
                 ],
-              ),       
+              ),
             ],
           ),
         ),

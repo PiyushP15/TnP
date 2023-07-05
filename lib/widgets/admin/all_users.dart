@@ -37,15 +37,15 @@ class _AllUsersState extends ConsumerState<AllUsers> {
       final gender = x.value['gender'];
       final dob = x.value['dob'];
       final ssc = x.value['ssc'];
-      final ssc_year = x.value['ssc'];
-      final hsc_year = x.value['ssc'];
-      final hsc = x.value['ssc'];
-      final grad = x.value['ssc'];
-      final grad_year = x.value['ssc'];
-      final sem1 = x.value['ssc'];
-      final sem2 = x.value['ssc'];
-      final sem3 = x.value['ssc'];
-      final sem4 = x.value['ssc'];
+      final ssc_year = x.value['ssc_year'];
+      final hsc_year = x.value['hsc_year'];
+      final hsc = x.value['hsc'];
+      final grad = x.value['grad'];
+      final grad_year = x.value['grad_year'];
+      final sem1 = x.value['sem1'];
+      final sem2 = x.value['sem2'];
+      final sem3 = x.value['sem3'];
+      final sem4 = x.value['sem4'];
       if (email == 'admin.tnp@gmail.com') {
         continue;
       }
