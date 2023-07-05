@@ -17,7 +17,7 @@ class AllJobsList extends ConsumerWidget {
     final displayWords = screenWidth > 1080 ? 400 : 100;
 
     Future<void> apply(String cName) async {
-      List temp = ['a'];
+      List temp = [];
       final url =
           Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
 
@@ -38,7 +38,7 @@ class AllJobsList extends ConsumerWidget {
 
           final urlupdate = Uri.https(
               'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
-          temp.add(user['name']);
+          temp.add(user['email']);
           await http.patch(urlupdate,
               body: json.encode({
                 'applicants': temp,
