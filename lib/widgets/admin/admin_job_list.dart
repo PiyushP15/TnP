@@ -10,6 +10,27 @@ class AdminJobsList extends StatelessWidget {
   Widget build(context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
+    print(allJobs);
+    if(allJobs.isEmpty){
+      return Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No Jobs To Display As Of Now',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
     return ListView.builder(
       itemCount: allJobs.length,
       itemBuilder: (ctx, index) => Card(
