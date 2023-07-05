@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tnp_portal/models/all_students.dart';
-import 'package:tnp_portal/providers/job_provider.dart';
-import 'package:tnp_portal/providers/user_provider.dart';
-import 'package:tnp_portal/models/all_jobs.dart';
-import 'package:tnp_portal/widgets/admin/admin_job_list.dart';
-import 'package:tnp_portal/widgets/all_jobs_list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -27,44 +22,60 @@ class _AllUsersState extends ConsumerState<AllUsers> {
   @override
   void initState() {
     super.initState();
-    // getjobs();
+    getstudents();
   }
 
-  final List<AllStudents> allStuds =[AllStudents(name: 'Sarvesh', email: 'TMKC')];
+  Future<void> getstudents() async {
+    List<AllStudents> temp = [];
+    final url = Uri.https(
+        'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+    final getResponse = await http.get(url);
+    final Map getData = json.decode(getResponse.body);
+    for (final x in getData.entries) {
+      final name = x.value['name'];
+      final email = x.value['email'];
+      final gender = x.value['gender'];
+      final dob = x.value['dob'];
+      final ssc = x.value['ssc'];
+      final ssc_year = x.value['ssc'];
+      final hsc_year = x.value['ssc'];
+      final hsc = x.value['ssc'];
+      final grad = x.value['ssc'];
+      final grad_year = x.value['ssc'];
+      final sem1 = x.value['ssc'];
+      final sem2 = x.value['ssc'];
+      final sem3 = x.value['ssc'];
+      final sem4 = x.value['ssc'];
+      if (email == 'admin.tnp@gmail.com') {
+        continue;
+      }
+      temp.add(AllStudents(
+        name: name,
+        email: email,
+        dob: dob,
+        gender: gender,
+        ssc: ssc,
+        ssc_year: ssc_year,
+        hsc: hsc,
+        hsc_year: hsc_year,
+        grad: grad,
+        grad_year: grad_year,
+        sem1: sem1,
+        sem2: sem2,
+        sem3: sem3,
+        sem4: sem4,
+      ));
+    }
 
-  // Future<void> getjobs() async {
-  //   List<AllStudents> temp=[];
-  //   final url =
-  //       Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
-  //   final getResponse = await http.get(url);
-  //   final Map getData = json.decode(getResponse.body);
-  //   for (final x in getData.entries) {
-  //     final cname = x.value['cname'];
-  //     final des = x.value['description'];
-  //     final pos = x.value['position'];
-  //     temp.add(AllJobs(companyName: cname, title: pos, desc: des));
-  //   }
-  //   print(temp);
-  //   setState(() {
-  //     jobs=temp;
-  //   });
-  // }
+    setState(() {
+      students = temp;
+    });
+  }
 
   @override
-  Widget build(context){
-    //Made to set the 
-    final user = ref.watch(userProvider);
-    // final global_jobs = ref.watch(jobProvider);
-    // Here we will set jobs equal to the fetched jobs
-
-    // Fetch All Jobs As A List Here In allJobs (You Can Do It Above As Well, Must Be triggered Everytime The Widget Is Called.)
-    // final List<Map<String,String>> fetchedJobs = []; 
-    print('jobs in homepage $students');
-
+  Widget build(context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: AllStudentsList(allStuds: allStuds)
-    );
-    // ListView.builder(itemCount: _jobs.length , itemBuilder: (ctx, index)=> Text(_jobs[index].title));
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: AllStudentsList(allStuds: students));
   }
 }
