@@ -43,10 +43,12 @@ class AllStudentsList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              Row(
+                children: [
+                  Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Text(
-                  allStuds[index].name,
+                  '${allStuds[index].name}(${allStuds[index].email})',
                   style: const TextStyle(
                     color: Color(0xFF96031A),
                     fontSize: 24,
@@ -54,122 +56,272 @@ class AllStudentsList extends StatelessWidget {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 5),
-              //   child: Text(
-              //     allJobs[index].title.length > 40
-              //         ? '${allJobs[index].title.substring(0, 40)}...'
-              //         : allJobs[index].title,
-              //     style:
-              //         const TextStyle(color: Color(0xFF96031A), fontSize: 18),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 5),
-              //   child: Text(
-              //     allJobs[index].desc.length > displayWords
-              //         ? '${allJobs[index].desc.substring(0, displayWords)}...'
-              //         : allJobs[index].desc,
-              //     style: const TextStyle(
-              //       color: Color(0XFF304C89),
-              //       fontSize: 16,
-              //     ),
-              //   ),
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     ElevatedButton(
-              //       style: ElevatedButton.styleFrom(
-              //         backgroundColor: const Color(0xFF0E6BA8),
-              //       ),
-              //       onPressed: () {
-              //         showModalBottomSheet(
-              //           backgroundColor:const Color(0XFFFAA916),
-              //           context: context,
-              //           builder: (BuildContext context) {
-              //             return SizedBox(
-              //               height: double.infinity,
-              //               child: Center(
-              //                 child: Padding(
-              //                   padding: const EdgeInsets.symmetric(
-              //                       horizontal: 30, vertical: 10),
-              //                   child: Column(
-              //                     crossAxisAlignment: CrossAxisAlignment.start,
-              //                     children: [
-              //                       const Text(
-              //                         'Company Name:',
-              //                         style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
-              //                       ),
-              //                       Text(
-              //                         allJobs[index].companyName,
-              //                         style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-              //                       ),
-              //                       const SizedBox(
-              //                         height: 20,
-              //                       ),
-              //                       const Text(
-              //                         'Position:',
-              //                         style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
-              //                       ),
-              //                       Text(
-              //                         allJobs[index].title,
-              //                         style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-              //                       ),
-              //                       const SizedBox(
-              //                         height: 20,
-              //                       ),
-              //                       const Text(
-              //                         'Job Description:',
-              //                         style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
-              //                       ),
-              //                       Expanded(
-              //                         child: SingleChildScrollView(
-              //                           scrollDirection: Axis.vertical,
-              //                           child: Text(
-              //                             allJobs[index].desc,
-              //                             style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
-              //                           ),
-              //                         ),
-              //                       ),
-              //                       const SizedBox(
-              //                         height: 20,
-              //                       ),
-              //                       Row(
-              //                         mainAxisAlignment: MainAxisAlignment.center,
-              //                         children: [
-              //                           ElevatedButton(
-              //                             child: const Text('Close'),
-              //                             onPressed: () =>
-              //                                 Navigator.pop(context),
-              //                           ),
-              //                           const SizedBox(width: 10,),
-              //                           ElevatedButton(
-              //                             style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green)),
-              //                             child: const Text('Apply'),
-              //                             onPressed: () =>
-              //                                 Navigator.pop(context),
-              //                           ),
-              //                         ],
-              //                       )
-              //                     ],
-              //                   ),
-              //                 ),
-              //               ),
-              //             );
-              //           },
-              //         );
-              //       },
-              //       child: const Text(
-              //         'View Details',
-              //         style: TextStyle(fontSize: 12),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              const Spacer(),
+              ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0E6BA8),
+                    ),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        backgroundColor:const Color(0XFFFAA916),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SizedBox(
+                            height: double.infinity,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 10),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Name:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].name,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Email:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].email,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Gender:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].gender,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'DOB:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].dob,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'SSC:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].ssc,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'SSC Year:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].ssc_year,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'HSC:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].hsc,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'HSC Year:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].hsc_year,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Grad:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].grad,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Grad Year:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].grad_year,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Sem 1:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].sem1,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Sem 2:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].sem2,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Sem 3:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].sem3,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                        'Sem 4:',
+                                        style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        allStuds[index].sem4,
+                                        style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                            child: const Text('Close'),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                          ),
+                                          const SizedBox(width: 10,),
+                                          ElevatedButton(
+                                            style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green)),
+                                            child: const Text('Restrict User'),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'View Details',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
               const SizedBox(
                 height: 5,
               )
+                ],
+              ),       
             ],
           ),
         ),
