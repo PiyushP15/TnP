@@ -16,7 +16,27 @@ class AllJobsList extends ConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
 
+    void applicationfailed() {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('You have already applied for this job post.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
     Future<void> apply(String cName) async {
+      var flag = 0;
       List temp = [];
       final url =
           Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
@@ -35,14 +55,24 @@ class AllJobsList extends ConsumerWidget {
         if (cName == i.value['cname']) {
           final id = i.key;
           final user = ref.watch(userProvider);
+          for (final a in temp) {
+            if (user['email'] == a) {
+              flag = 1;
+              //Applicant already applied
+              applicationfailed();
 
-          final urlupdate = Uri.https(
-              'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
-          temp.add(user['email']);
-          await http.patch(urlupdate,
-              body: json.encode({
-                'applicants': temp,
-              }));
+              break;
+            }
+          }
+          if (flag == 0) {
+            final urlupdate = Uri.https(
+                'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
+            temp.add(user['email']);
+            await http.patch(urlupdate,
+                body: json.encode({
+                  'applicants': temp,
+                }));
+          }
         }
       }
     }

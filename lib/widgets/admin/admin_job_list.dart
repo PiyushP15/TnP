@@ -198,9 +198,14 @@ class AdminJobsList extends StatelessWidget {
                                           onPressed: () {
                                             print(allJobs[index].applicants);
 
-                                            Navigator.push(context, MaterialPageRoute(
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const Applicants()));
+                                                        Applicants(
+                                                            cName: allJobs[
+                                                                    index]
+                                                                .companyName)));
                                           },
                                         ),
                                         const SizedBox(
