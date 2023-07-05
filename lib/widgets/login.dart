@@ -35,7 +35,7 @@ class _LoginState extends ConsumerState<Login> {
     final Map allData = json.decode(getResponse.body);
 
     for (final i in allData.entries) {
-      if (user['email'] == i.value['email'] && user['isRestricted']=='false') {
+      if (user['email'] == i.value['email'] && i.value['isRestricted']=='false') {
         user['name'] = i.value['name'];
         user['dob'] = i.value['dob'];
         user['gender'] = i.value['gender'];
@@ -49,7 +49,7 @@ class _LoginState extends ConsumerState<Login> {
         user['sem2'] = i.value['sem2'];
         user['sem3'] = i.value['sem3'];
         user['sem4'] = i.value['sem4'];
-
+        user['isRestricted'] = i.value['isRestricted'];
         break;
       }
     }

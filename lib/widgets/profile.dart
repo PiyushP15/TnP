@@ -130,12 +130,15 @@ class _ProfileState extends ConsumerState<Profile> {
                     'sem2': userSem2,
                     'sem3': userSem3,
                     'sem4': userSem4,
+                    'isRestricted':'false',
                   }));
             }
           }
         }
 
-        getdata();
+        setState(() {
+          getdata();
+        });
 
         showDialog(
           context: context,
