@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tnp_portal/models/all_jobs.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:tnp_portal/widgets/admin/admin_layout.dart';
 
 class AdminJobsList extends StatelessWidget {
   const AdminJobsList({super.key, required this.allJobs});
@@ -8,14 +12,30 @@ class AdminJobsList extends StatelessWidget {
 
   @override
   Widget build(context) {
+    var flag = 0;
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
-    // print(allJobs);
 
-    void handleDelete(String cName, String pos) {
-      //All Logic Here
-      print(cName);
-      print(pos);
+    Future<void> handleDelete(String cName, String pos) async {
+      final url =
+          Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+
+      final getResponse = await http.get(url);
+      final Map allData = json.decode(getResponse.body);
+
+      for (final i in allData.entries) {
+        if ((cName == i.value['cname']) && (pos == i.value['position'])) {
+          final id = i.key;
+          final urldelete = Uri.https(
+              'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
+          final delResponse = await http.delete(urldelete);
+          print(delResponse.statusCode);
+          if (delResponse.statusCode == 200) {
+            flag = 1;
+            break;
+          }
+        }
+      }
     }
 
     if (allJobs.isEmpty) {
@@ -183,33 +203,23 @@ class AdminJobsList extends StatelessWidget {
                                           width: 10,
                                         ),
                                         ElevatedButton(
-                                            style: const ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStatePropertyAll(
-                                                        Color(0xFF96031A))),
-                                            child: const Text('Delete Job'),
-                                            onPressed: () {
-                                              handleDelete(
-                                                  allJobs[index].companyName,
-                                                  allJobs[index].title);
-                                              showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                  title: const Text('Success'),
-                                                  content: const Text(
-                                                      'Job Was Successfully Deleted!'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(ctx);
-                                                      },
-                                                      child: const Text('Okay'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                              Navigator.pop(context);
-                                            }),
+                                          style: const ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStatePropertyAll(
+                                                      Color(0xFF96031A))),
+                                          child: const Text('Delete Job'),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            handleDelete(
+                                                allJobs[index].companyName,
+                                                allJobs[index].title);
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const AdminLayout()));
+                                          },
+                                        ),
                                       ],
                                     )
                                   ],

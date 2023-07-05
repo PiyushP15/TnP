@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tnp_portal/widgets/admin/admin_layout.dart';
 import 'dart:convert';
 import 'package:tnp_portal/widgets/custom_text_field.dart';
 
@@ -19,7 +20,24 @@ class AddJob extends StatelessWidget {
       final description = descriptionHandler.text;
 
       if (name.isEmpty || position.isEmpty || description.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Please Enter All Details'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Okay'),
+              ),
+            ],
+          ),
+        );
+        return;
       } else {
+        final appl=['a','b'];
         final myurl = Uri.https(
             'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
         await http.post(myurl,
@@ -28,6 +46,7 @@ class AddJob extends StatelessWidget {
               'cname': name,
               'position': position,
               'description': description,
+              'applicants':appl,
             }));
       }
     }
@@ -41,7 +60,10 @@ class AddJob extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
               'Add Job',
-              style: TextStyle(fontSize: 52,color: Color(0xFF96031A),),
+              style: TextStyle(
+                fontSize: 52,
+                color: Color(0xFF96031A),
+              ),
             ),
           ),
           Row(
@@ -81,7 +103,11 @@ class AddJob extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: onSubmit,
+            onPressed: (){
+              onSubmit();
+              Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const AdminLayout() ));
+            },
             child: const Text('Post Job'),
           ),
         ],
