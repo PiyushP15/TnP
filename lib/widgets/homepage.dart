@@ -48,7 +48,7 @@ class _HomepageState extends ConsumerState<Homepage> {
       final pos = x.value['position'];
       temp.add(AllJobs(companyName: cname, title: pos, desc: des,applicants: []));
     }
-    print(temp);
+    // print(temp);
     setState(() {
       jobs=temp;
     });
@@ -63,7 +63,7 @@ class _HomepageState extends ConsumerState<Homepage> {
 
     // Fetch All Jobs As A List Here In allJobs (You Can Do It Above As Well, Must Be triggered Everytime The Widget Is Called.)
     // final List<Map<String,String>> fetchedJobs = []; 
-    print('jobs in homepage $jobs');
+    // print('jobs in homepage $jobs');
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),

@@ -10,7 +10,7 @@ class AdminJobsList extends StatelessWidget {
   Widget build(context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
-    print(allJobs);
+    // print(allJobs);
     if(allJobs.isEmpty){
       return Padding(
         padding: const EdgeInsets.all(20),
@@ -20,11 +20,13 @@ class AdminJobsList extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'No Jobs To Display As Of Now',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
-                  ),
+                Expanded(
+                  child: Text(
+                    'No Jobs To Display As Of Now',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
+                    ),
+                ),
               ],
             ),
           ],
@@ -146,15 +148,18 @@ class AdminJobsList extends StatelessWidget {
                                         const SizedBox(width: 10,),
                                         ElevatedButton(
                                           child: const Text('See Applicants'),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
+                                          onPressed: () {
+                                            print(allJobs[index].applicants);
+                                            Navigator.pop(context);
+                                          },
                                         ),
                                         const SizedBox(width: 10,),
                                         ElevatedButton(
                                           style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF96031A))),
                                           child: const Text('Delete Job'),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
+                                          onPressed: () {
+                                              Navigator.pop(context);
+                                          }
                                         ),
                                       ],
                                     )

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 
 class CustomTextField extends StatefulWidget {
-  const CustomTextField(this.label,{super.key, required this.cont, required this.obscure, this.placeholder, required this.keyboard, this.isEnabled});
+  const CustomTextField(this.label,{super.key, required this.cont, required this.obscure, this.placeholder, required this.keyboard, this.isEnabled, this.validator});
 
   final String label;
   final TextEditingController cont;
@@ -9,6 +10,7 @@ class CustomTextField extends StatefulWidget {
   final String? placeholder;
   final TextInputType keyboard;
   final bool? isEnabled;
+  final String? Function(String?)? validator;
   
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -36,6 +38,7 @@ class _CustomTextFieldState extends State<CustomTextField>{
         ),
         keyboardType: widget.keyboard,
         enabled: widget.isEnabled,
+        validator: widget.validator,
       ),
     );
   }

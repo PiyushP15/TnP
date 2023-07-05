@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -65,6 +66,50 @@ class _RegisterState extends ConsumerState<Register> {
     var userSem3 = sem3Handler.text.trim();
     var userSem4 = sem4Handler.text.trim();
 
+    bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$').hasMatch(userEmail);
+    // print (emailValid);
+
+    if(!emailValid){
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Email'),
+          content: const Text('Print enter a valid email'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    bool passValid = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$').hasMatch(userPass);
+    // print(passValid);
+
+    if(!passValid){
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Re-enter Password'),
+          content: const Text('Password must have atleast 1 uppecase, lowercase, digit and special character'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
     final getResponse = await http.get(url);
     final List mails = [];
     final Map allData = json.decode(getResponse.body);
@@ -96,7 +141,9 @@ class _RegisterState extends ConsumerState<Register> {
           ],
         ),
       );
-    } else if (userName.isEmpty ||
+      return;
+    }
+    if (userName.isEmpty ||
         userEmail.isEmpty ||
         userPass.isEmpty ||
         userCpass.isEmpty ||
@@ -107,7 +154,8 @@ class _RegisterState extends ConsumerState<Register> {
         userHsc.isEmpty ||
         userHscYear.isEmpty ||
         userGrad.isEmpty ||
-        userGradYear.isEmpty) {
+        userGradYear.isEmpty
+        ) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -123,7 +171,9 @@ class _RegisterState extends ConsumerState<Register> {
           ],
         ),
       );
-    } else if (userPass.length < 6) {
+      return;
+    } 
+    if (userPass.length < 6) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -139,7 +189,9 @@ class _RegisterState extends ConsumerState<Register> {
           ],
         ),
       );
-    } else if (userPass != userCpass) {
+      return;
+    }
+    if (userPass != userCpass) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -155,6 +207,7 @@ class _RegisterState extends ConsumerState<Register> {
           ],
         ),
       );
+      return;
     } else {
       await http.post(
         url,

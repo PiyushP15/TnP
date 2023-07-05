@@ -41,7 +41,7 @@ class AddJob extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
               'Add Job',
-              style: TextStyle(fontSize: 52),
+              style: TextStyle(fontSize: 52,color: Color(0xFF96031A),),
             ),
           ),
           Row(

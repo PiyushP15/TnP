@@ -20,11 +20,13 @@ class AllJobsList extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'No Jobs To Display As Of Now',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
-                  ),
+                Expanded(
+                  child: Text(
+                    'No Jobs To Display As Of Now',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
+                    ),
+                ),
               ],
             ),
           ],

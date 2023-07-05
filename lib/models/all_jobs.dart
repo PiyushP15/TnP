@@ -10,5 +10,5 @@ class AllJobs{
   final String companyName;
   final String title;
   final String desc;
-  final List applicants;
+  final List<String> applicants;
 }
