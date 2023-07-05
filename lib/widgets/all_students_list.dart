@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:tnp_portal/models/all_students.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AllStudentsList extends StatelessWidget {
   const AllStudentsList({super.key, required this.allStuds});
 
   final List<AllStudents> allStuds;
 
-  void restrictUser(String email){
-    print(email);
+  Future<void> restrictUser(String email) async {
+    final url = Uri.https(
+        'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+    final getResponse = await http.get(url);
+    final Map allData = json.decode(getResponse.body);
+    for (final i in allData.entries) {
+      if (email == i.value['email']) {
+        final id = i.key;
+        final urlupdate = Uri.https(
+            'tnp-portal-2023-default-rtdb.firebaseio.com', 'register/$id.json');
+        if (i.value['isRestricted'] == "false") {
+          await http.patch(urlupdate,
+              body: json.encode({
+                'isRestricted': 'true',
+              }));
+        } else if (i.value['isRestricted'] == "true") {
+          await http.patch(urlupdate,
+              body: json.encode({
+                'isRestricted': 'false',
+              }));
+        }
+      }
+    }
   }
 
   @override
@@ -388,10 +411,10 @@ class AllStudentsList extends StatelessWidget {
                                               child:
                                                   const Text('Restrict User'),
                                               onPressed: () {
-                                                  Navigator.pop(context);
-                                                  restrictUser(allStuds[index].email);
-                                              }
-                                                  ,
+                                                Navigator.pop(context);
+                                                restrictUser(
+                                                    allStuds[index].email);
+                                              },
                                             ),
                                           ],
                                         )
