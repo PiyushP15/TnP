@@ -3,10 +3,13 @@ import 'package:tnp_portal/models/all_students.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:tnp_portal/widgets/admin/admin_layout.dart';
+
 class AllStudentsList extends StatelessWidget {
   const AllStudentsList({super.key, required this.allStuds});
 
   final List<AllStudents> allStuds;
+
 
   Future<void> restrictUser(String email) async {
     final url = Uri.https(
@@ -409,11 +412,16 @@ class AllStudentsList extends StatelessWidget {
                                                       MaterialStatePropertyAll(
                                                           Colors.green)),
                                               child:
-                                                  const Text('Restrict User'),
+                                                  Text(allStuds[index].isRestricted == 'false'?'Restrict':'Unrestrict'),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                                 restrictUser(
                                                     allStuds[index].email);
+                                                 Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const AdminLayout()));
                                               },
                                             ),
                                           ],
