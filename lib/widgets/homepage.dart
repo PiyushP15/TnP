@@ -13,20 +13,18 @@ class Homepage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<Homepage> createState() {
-    return _Homepage();
+    return _HomepageState();
   }
 }
 
 //After login its not working... user must click on homepage from navigation to get data
-class _Homepage extends ConsumerState<Homepage> {
+class _HomepageState extends ConsumerState<Homepage> {
   List<AllJobs> jobs = [];
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      getjobs();
-    });
+    getjobs();
   }
 
   // final List<AllJobs> _jobs = [
@@ -39,6 +37,7 @@ class _Homepage extends ConsumerState<Homepage> {
   // ];
 
   Future<void> getjobs() async {
+    List<AllJobs> temp=[];
     final url =
         Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
     final getResponse = await http.get(url);
@@ -47,8 +46,12 @@ class _Homepage extends ConsumerState<Homepage> {
       final cname = x.value['cname'];
       final des = x.value['description'];
       final pos = x.value['position'];
-      jobs.add(AllJobs(companyName: cname, title: pos, desc: des));
+      temp.add(AllJobs(companyName: cname, title: pos, desc: des));
     }
+    print(temp);
+    setState(() {
+      jobs=temp;
+    });
   }
 
   @override
@@ -64,7 +67,7 @@ class _Homepage extends ConsumerState<Homepage> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: user['email'] == '' ? AdminJobsList(allJobs: jobs):AllJobsList(allJobs: jobs),
+      child: user['email']=='' ? AdminJobsList(allJobs: jobs):AllJobsList(allJobs: jobs),
     );
     // ListView.builder(itemCount: _jobs.length , itemBuilder: (ctx, index)=> Text(_jobs[index].title));
   }

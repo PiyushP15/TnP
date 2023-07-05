@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AdminHomepage extends StatelessWidget {
-  const AdminHomepage({super.key});
+class AdminDashboard extends StatelessWidget {
+  const AdminDashboard({super.key});
 
   final students = 69;
   final jobs = 10;
