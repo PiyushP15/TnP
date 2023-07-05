@@ -46,7 +46,7 @@ class _HomepageState extends ConsumerState<Homepage> {
       final cname = x.value['cname'];
       final des = x.value['description'];
       final pos = x.value['position'];
-      temp.add(AllJobs(companyName: cname, title: pos, desc: des));
+      temp.add(AllJobs(companyName: cname, title: pos, desc: des,applicants: []));
     }
     print(temp);
     setState(() {

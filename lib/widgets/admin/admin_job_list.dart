@@ -145,6 +145,12 @@ class AdminJobsList extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 10,),
                                         ElevatedButton(
+                                          child: const Text('See Applicants'),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                        ),
+                                        const SizedBox(width: 10,),
+                                        ElevatedButton(
                                           style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF96031A))),
                                           child: const Text('Delete Job'),
                                           onPressed: () =>
