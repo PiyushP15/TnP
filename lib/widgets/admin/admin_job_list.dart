@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:tnp_portal/widgets/admin/admin_layout.dart';
+import 'package:tnp_portal/widgets/admin/applicants.dart';
 
 class AdminJobsList extends StatelessWidget {
   const AdminJobsList({super.key, required this.allJobs});
@@ -196,7 +197,10 @@ class AdminJobsList extends StatelessWidget {
                                           child: const Text('See Applicants'),
                                           onPressed: () {
                                             print(allJobs[index].applicants);
-                                            Navigator.pop(context);
+
+                                            Navigator.push(context, MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Applicants()));
                                           },
                                         ),
                                         const SizedBox(

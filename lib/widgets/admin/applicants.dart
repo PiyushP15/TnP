@@ -74,8 +74,11 @@ class _ApplicantsState extends ConsumerState<Applicants> {
 
   @override
   Widget build(context) {
-    return Padding(
+    return Scaffold(
+      appBar: AppBar(title: const Text('TnP')),
+      body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
-        child: AllStudentsList(allStuds: students));
+        child: AllStudentsList(allStuds: students)),
+    );
   }
 }
