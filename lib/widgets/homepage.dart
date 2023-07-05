@@ -37,7 +37,7 @@ class _HomepageState extends ConsumerState<Homepage> {
   // ];
 
   Future<void> getjobs() async {
-    List<AllJobs> temp=[];
+    List<AllJobs> temp = [];
     final url =
         Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
     final getResponse = await http.get(url);
@@ -46,28 +46,31 @@ class _HomepageState extends ConsumerState<Homepage> {
       final cname = x.value['cname'];
       final des = x.value['description'];
       final pos = x.value['position'];
-      temp.add(AllJobs(companyName: cname, title: pos, desc: des,applicants: []));
+      temp.add(
+          AllJobs(companyName: cname, title: pos, desc: des, applicants: []));
     }
     // print(temp);
     setState(() {
-      jobs=temp;
+      jobs = temp;
     });
   }
 
   @override
-  Widget build(context){
-    //Made to set the 
+  Widget build(context) {
+    //Made to set the
     final user = ref.watch(userProvider);
     // final global_jobs = ref.watch(jobProvider);
     // Here we will set jobs equal to the fetched jobs
 
     // Fetch All Jobs As A List Here In allJobs (You Can Do It Above As Well, Must Be triggered Everytime The Widget Is Called.)
-    // final List<Map<String,String>> fetchedJobs = []; 
+    // final List<Map<String,String>> fetchedJobs = [];
     // print('jobs in homepage $jobs');
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: user['email']=='' ? AdminJobsList(allJobs: jobs):AllJobsList(allJobs: jobs),
+      child: user['email'] == ''
+          ? AdminJobsList(allJobs: jobs)
+          : AllJobsList(allJobs: jobs),
     );
     // ListView.builder(itemCount: _jobs.length , itemBuilder: (ctx, index)=> Text(_jobs[index].title));
   }
