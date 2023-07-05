@@ -104,20 +104,20 @@ class AllStudentsList extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            const Flexible(
-                                              child: Text(
-                                                'Email:            ',
-                                                style: TextStyle(
-                                                    color: Color(0xFF96031A),
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w600),
-                                              ),
+                                            const Text(
+                                              'Email:            ',
+                                              style: TextStyle(
+                                                  color: Color(0xFF96031A),
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600),
                                             ),
-                                            Text(
-                                              allStuds[index].email,
-                                              style: const TextStyle(
-                                                  color: Color(0xFFFFFFFF),
-                                                  fontSize: 16),
+                                            Expanded(
+                                              child: Text(
+                                                allStuds[index].email,
+                                                style: const TextStyle(
+                                                    color: Color(0xFFFFFFFF),
+                                                    fontSize: 16),
+                                              ),
                                             ),
                                           ],
                                         ),

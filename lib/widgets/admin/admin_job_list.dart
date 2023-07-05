@@ -12,30 +12,13 @@ class AdminJobsList extends StatelessWidget {
     final displayWords = screenWidth > 1080 ? 400 : 100;
     // print(allJobs);
 
-  void handleDelete(String cName, String pos){
-    //All Logic Here
-    print(cName);
-    print(pos);
+    void handleDelete(String cName, String pos) {
+      //All Logic Here
+      print(cName);
+      print(pos);
+    }
 
-
-    showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Success'),
-          content: const Text('Job Was Successfully Deleted!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-              },
-              child: const Text('Okay'),
-            ),
-          ],
-        ),
-      );
-  }
-
-    if(allJobs.isEmpty){
+    if (allJobs.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -48,8 +31,9 @@ class AdminJobsList extends StatelessWidget {
                   child: Text(
                     'No Jobs To Display As Of Now',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
-                    ),
+                    style: TextStyle(
+                        fontSize: 50, color: Colors.grey.withOpacity(0.5)),
+                  ),
                 ),
               ],
             ),
@@ -125,36 +109,51 @@ class AdminJobsList extends StatelessWidget {
                                   children: [
                                     const Text(
                                       'Company Name:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].companyName,
-                                      style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const Text(
                                       'Position:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].title,
-                                      style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const Text(
                                       'Job Description:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Expanded(
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: Text(
                                           allJobs[index].desc,
-                                          style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
+                                          style: const TextStyle(
+                                              color: Color(0xFFFFFFFF),
+                                              fontSize: 16),
                                         ),
                                       ),
                                     ),
@@ -162,14 +161,17 @@ class AdminJobsList extends StatelessWidget {
                                       height: 20,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         ElevatedButton(
                                           child: const Text('Close'),
                                           onPressed: () =>
                                               Navigator.pop(context),
                                         ),
-                                        const SizedBox(width: 10,),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
                                         ElevatedButton(
                                           child: const Text('See Applicants'),
                                           onPressed: () {
@@ -177,15 +179,37 @@ class AdminJobsList extends StatelessWidget {
                                             Navigator.pop(context);
                                           },
                                         ),
-                                        const SizedBox(width: 10,),
-                                        ElevatedButton(
-                                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF96031A))),
-                                          child: const Text('Delete Job'),
-                                          onPressed: () {
-                                            handleDelete(allJobs[index].companyName,allJobs[index].title);
-                                              Navigator.pop(context);
-                                          }
+                                        const SizedBox(
+                                          width: 10,
                                         ),
+                                        ElevatedButton(
+                                            style: const ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        Color(0xFF96031A))),
+                                            child: const Text('Delete Job'),
+                                            onPressed: () {
+                                              handleDelete(
+                                                  allJobs[index].companyName,
+                                                  allJobs[index].title);
+                                              showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  title: const Text('Success'),
+                                                  content: const Text(
+                                                      'Job Was Successfully Deleted!'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(ctx);
+                                                      },
+                                                      child: const Text('Okay'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                              Navigator.pop(context);
+                                            }),
                                       ],
                                     )
                                   ],
