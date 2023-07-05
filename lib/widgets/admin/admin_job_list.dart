@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tnp_portal/models/all_jobs.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AdminJobsList extends StatelessWidget {
   const AdminJobsList({super.key, required this.allJobs});
@@ -8,34 +10,33 @@ class AdminJobsList extends StatelessWidget {
 
   @override
   Widget build(context) {
+    var flag = 0;
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
-    // print(allJobs);
 
-  void handleDelete(String cName, String pos){
-    //All Logic Here
-    print(cName);
-    print(pos);
+    Future<void> handleDelete(String cName, String pos) async {
+      final url =
+          Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
 
+      final getResponse = await http.get(url);
+      final Map allData = json.decode(getResponse.body);
 
-    showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Success'),
-          content: const Text('Job Was Successfully Deleted!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-              },
-              child: const Text('Okay'),
-            ),
-          ],
-        ),
-      );
-  }
+      for (final i in allData.entries) {
+        if ((cName == i.value['cname']) && (pos == i.value['position'])) {
+          final id = i.key;
+          final urldelete = Uri.https(
+              'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
+          final delResponse = await http.delete(urldelete);
+          print(delResponse.statusCode);
+          if (delResponse.statusCode == 200) {
+            flag = 1;
+            break;
+          }
+        }
+      }
+    }
 
-    if(allJobs.isEmpty){
+    if (allJobs.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -48,8 +49,9 @@ class AdminJobsList extends StatelessWidget {
                   child: Text(
                     'No Jobs To Display As Of Now',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50,color: Colors.grey.withOpacity(0.5)),
-                    ),
+                    style: TextStyle(
+                        fontSize: 50, color: Colors.grey.withOpacity(0.5)),
+                  ),
                 ),
               ],
             ),
@@ -125,36 +127,51 @@ class AdminJobsList extends StatelessWidget {
                                   children: [
                                     const Text(
                                       'Company Name:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].companyName,
-                                      style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const Text(
                                       'Position:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].title,
-                                      style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
                                     const Text(
                                       'Job Description:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
+                                      style: TextStyle(
+                                          color: Color(0xFF96031A),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     Expanded(
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: Text(
                                           allJobs[index].desc,
-                                          style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
+                                          style: const TextStyle(
+                                              color: Color(0xFFFFFFFF),
+                                              fontSize: 16),
                                         ),
                                       ),
                                     ),
@@ -162,14 +179,17 @@ class AdminJobsList extends StatelessWidget {
                                       height: 20,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         ElevatedButton(
                                           child: const Text('Close'),
                                           onPressed: () =>
                                               Navigator.pop(context),
                                         ),
-                                        const SizedBox(width: 10,),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
                                         ElevatedButton(
                                           child: const Text('See Applicants'),
                                           onPressed: () {
@@ -177,15 +197,21 @@ class AdminJobsList extends StatelessWidget {
                                             Navigator.pop(context);
                                           },
                                         ),
-                                        const SizedBox(width: 10,),
-                                        ElevatedButton(
-                                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF96031A))),
-                                          child: const Text('Delete Job'),
-                                          onPressed: () {
-                                            handleDelete(allJobs[index].companyName,allJobs[index].title);
-                                              Navigator.pop(context);
-                                          }
+                                        const SizedBox(
+                                          width: 10,
                                         ),
+                                        ElevatedButton(
+                                            style: const ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        Color(0xFF96031A))),
+                                            child: const Text('Delete Job'),
+                                            onPressed: () {
+                                              handleDelete(
+                                                  allJobs[index].companyName,
+                                                  allJobs[index].title);
+                                              Navigator.pop(context);
+                                            }),
                                       ],
                                     )
                                   ],
