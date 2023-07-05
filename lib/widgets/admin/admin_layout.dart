@@ -6,7 +6,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 import 'package:tnp_portal/widgets/admin/admin_homepage.dart';
 import 'package:tnp_portal/widgets/admin/add_job.dart';
-import 'package:tnp_portal/widgets/admin/all_jobs.dart';
+import 'package:tnp_portal/widgets/homepage.dart';
 
 class AdminLayout extends ConsumerStatefulWidget {
   const AdminLayout({super.key});
@@ -35,7 +35,7 @@ class _AdminLayout extends ConsumerState<AdminLayout> {
     }
     if (page == 'alljobs') {
       setState(() {
-        _currentPage = const AllJobs();
+        _currentPage = const Homepage();
         Navigator.pop(context);
       });
     }

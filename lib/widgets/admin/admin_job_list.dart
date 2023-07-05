@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tnp_portal/models/all_jobs.dart';
 
-class AllJobsList extends StatelessWidget {
-  const AllJobsList({super.key, required this.allJobs});
+class AdminJobsList extends StatelessWidget {
+  const AdminJobsList({super.key, required this.allJobs});
 
   final List<AllJobs> allJobs;
 
@@ -64,7 +64,7 @@ class AllJobsList extends StatelessWidget {
                     ),
                     onPressed: () {
                       showModalBottomSheet(
-                        backgroundColor:const Color(0XFFFAA916),
+                        backgroundColor: const Color(0XFFFAA916),
                         context: context,
                         builder: (BuildContext context) {
                           return SizedBox(
@@ -78,11 +78,11 @@ class AllJobsList extends StatelessWidget {
                                   children: [
                                     const Text(
                                       'Company Name:',
-                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18, fontWeight: FontWeight.w600),
+                                      style: TextStyle(color: Color(0xFF96031A),fontSize: 18,fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       allJobs[index].companyName,
-                                      style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
@@ -93,7 +93,7 @@ class AllJobsList extends StatelessWidget {
                                     ),
                                     Text(
                                       allJobs[index].title,
-                                      style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                      style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
                                     ),
                                     const SizedBox(
                                       height: 20,
@@ -107,7 +107,7 @@ class AllJobsList extends StatelessWidget {
                                         scrollDirection: Axis.vertical,
                                         child: Text(
                                           allJobs[index].desc,
-                                          style: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 16),
+                                          style: const TextStyle(color:Color(0xFFFFFFFF),fontSize: 16),
                                         ),
                                       ),
                                     ),
@@ -124,8 +124,8 @@ class AllJobsList extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 10,),
                                         ElevatedButton(
-                                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green)),
-                                          child: const Text('Apply'),
+                                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF96031A))),
+                                          child: const Text('Delete Job'),
                                           onPressed: () =>
                                               Navigator.pop(context),
                                         ),
