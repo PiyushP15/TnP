@@ -11,6 +11,30 @@ class AdminJobsList extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
     // print(allJobs);
+
+  void handleDelete(String cName, String pos){
+    //All Logic Here
+    print(cName);
+    print(pos);
+
+
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Success'),
+          content: const Text('Job Was Successfully Deleted!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+  }
+
     if(allJobs.isEmpty){
       return Padding(
         padding: const EdgeInsets.all(20),
@@ -158,6 +182,7 @@ class AdminJobsList extends StatelessWidget {
                                           style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF96031A))),
                                           child: const Text('Delete Job'),
                                           onPressed: () {
+                                            handleDelete(allJobs[index].companyName,allJobs[index].title);
                                               Navigator.pop(context);
                                           }
                                         ),
