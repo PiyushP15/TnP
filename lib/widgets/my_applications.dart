@@ -38,7 +38,7 @@ class _MyApplicationsState extends ConsumerState<MyApplications> {
     for (final x in getData.entries) {
       List l = x.value['applicants'];
 
-      for (final applicant in l.sublist(2)) {
+      for (final applicant in l.sublist(1)) {
         final user = ref.watch(userProvider);
 
         if (user['email'] == applicant) {
