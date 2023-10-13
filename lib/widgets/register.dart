@@ -28,7 +28,7 @@ class Register extends ConsumerStatefulWidget {
 
 class _RegisterState extends ConsumerState<Register> {
   final url =
-      Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+      Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
   final nameHandler = TextEditingController();
   final emailHandler = TextEditingController();
   final passHandler = TextEditingController();

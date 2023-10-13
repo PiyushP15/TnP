@@ -32,9 +32,9 @@ class _ApplicantsState extends ConsumerState<Applicants> {
     List<AllStudents> temp = [];
     print('Process Started');
     final url = Uri.https(
-        'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+        'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
     final urljob =
-        Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+        Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
     final getResponseJob = await http.get(urljob);
     // print('getResponseJob');
     final Map getDataJob = json.decode(getResponseJob.body);

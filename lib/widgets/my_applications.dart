@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tnp_portal/providers/job_provider.dart';
@@ -31,7 +33,7 @@ class _MyApplicationsState extends ConsumerState<MyApplications> {
     List<AllJobs> temp = [];
 
     final url =
-        Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+        Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
     final getResponse = await http.get(url);
     final Map getData = json.decode(getResponse.body);
 

@@ -13,13 +13,14 @@ class AdminJobsList extends StatelessWidget {
 
   @override
   Widget build(context) {
+    // ignore: unused_local_variable
     var flag = 0;
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
 
     Future<void> handleDelete(String cName, String pos) async {
       final url =
-          Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+          Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
 
       final getResponse = await http.get(url);
       final Map allData = json.decode(getResponse.body);
@@ -28,7 +29,7 @@ class AdminJobsList extends StatelessWidget {
         if ((cName == i.value['cname']) && (pos == i.value['position'])) {
           final id = i.key;
           final urldelete = Uri.https(
-              'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
+              'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs/$id.json');
           final delResponse = await http.delete(urldelete);
           print(delResponse.statusCode);
           if (delResponse.statusCode == 200) {

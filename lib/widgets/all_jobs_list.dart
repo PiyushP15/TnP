@@ -39,7 +39,7 @@ class AllJobsList extends ConsumerWidget {
       var flag = 0;
       List temp = [];
       final url =
-          Uri.https('tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+          Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
 
       final getResponse = await http.get(url);
 
@@ -66,7 +66,7 @@ class AllJobsList extends ConsumerWidget {
           }
           if (flag == 0) {
             final urlupdate = Uri.https(
-                'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs/$id.json');
+                'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs/$id.json');
             temp.add(user['email']);
             await http.patch(urlupdate,
                 body: json.encode({

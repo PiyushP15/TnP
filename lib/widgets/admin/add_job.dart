@@ -39,7 +39,7 @@ class AddJob extends StatelessWidget {
       } else {
         final appl = ['a'];
         final myurl = Uri.https(
-            'tnp-portal-2023-default-rtdb.firebaseio.com', 'jobs.json');
+            'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
         await http.post(myurl,
             headers: {'Cotent-Type': 'application/json'},
             body: json.encode({

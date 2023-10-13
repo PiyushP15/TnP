@@ -13,14 +13,14 @@ class AllStudentsList extends StatelessWidget {
 
   Future<void> restrictUser(String email) async {
     final url = Uri.https(
-        'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+        'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
     final getResponse = await http.get(url);
     final Map allData = json.decode(getResponse.body);
     for (final i in allData.entries) {
       if (email == i.value['email']) {
         final id = i.key;
         final urlupdate = Uri.https(
-            'tnp-portal-2023-default-rtdb.firebaseio.com', 'register/$id.json');
+            'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register/$id.json');
         if (i.value['isRestricted'] == "false") {
           await http.patch(urlupdate,
               body: json.encode({

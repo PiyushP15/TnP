@@ -28,7 +28,7 @@ class _AllUsersState extends ConsumerState<AllUsers> {
   Future<void> getstudents() async {
     List<AllStudents> temp = [];
     final url = Uri.https(
-        'tnp-portal-2023-default-rtdb.firebaseio.com', 'register.json');
+        'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
     final getResponse = await http.get(url);
     final Map getData = json.decode(getResponse.body);
     for (final x in getData.entries) {
