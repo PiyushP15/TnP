@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAGdp_HI3URdHBq9ItK66oVmOQNK03ChHE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>939198105430</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.tnpPortal</string>
+	<key>PROJECT_ID</key>
+	<string>tnp-portal-63ea2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tnp-portal-63ea2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:939198105430:ios:a17f09ff6fc4342d7478f7</string>
+	<key>DATABASE_URL</key>
+	<string>https://tnp-portal-63ea2-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

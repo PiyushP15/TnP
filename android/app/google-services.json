@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "939198105430",
+    "firebase_url": "https://tnp-portal-63ea2-default-rtdb.firebaseio.com",
+    "project_id": "tnp-portal-63ea2",
+    "storage_bucket": "tnp-portal-63ea2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939198105430:android:9bb4b5a1230865047478f7",
+        "android_client_info": {
+          "package_name": "com.example.tnp_portal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxvR00RO_ExkORvoCJe7MkfwnO269WRM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

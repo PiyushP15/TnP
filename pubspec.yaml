@@ -43,6 +43,8 @@ dependencies:
   http: ^0.13.6
   text_area: ^0.0.3
   form_validator: ^2.1.1
+  firebase_core: ^2.19.0
+  firebase_auth: ^4.11.1
 
 dev_dependencies:
   flutter_test:

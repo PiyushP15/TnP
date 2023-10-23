@@ -11,9 +11,9 @@ import 'package:http/http.dart' as http;
 
 import 'package:tnp_portal/widgets/custom_text_field.dart';
 import 'package:tnp_portal/providers/user_provider.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 const List<String> genders = <String>['Male', 'Female', 'Other'];
-
+final _firebase=FirebaseAuth.instance;
 class Register extends ConsumerStatefulWidget {
   const Register({super.key, required this.onToggle, required this.onRegister});
 
@@ -233,7 +233,28 @@ class _RegisterState extends ConsumerState<Register> {
           },
         ),
       );
-
+      try{
+      var usrCredentials=await _firebase.createUserWithEmailAndPassword(email: userEmail, password: userPass);
+      }
+      on FirebaseAuthException catch(e)
+      {
+        showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('SignUp Error'),
+        content: const Text(
+            'Authentication failed'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+            },
+            child: const Text('Okay'),
+          ),
+        ],
+      ),
+    );
+      }
       widget.onRegister();
     }
   }
