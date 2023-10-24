@@ -8,6 +8,7 @@ import 'package:tnp_portal/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'custom_text_field.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 bool isEnabled = false;
 
@@ -23,8 +24,8 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<Profile> {
-  final url =
-      Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
+  final url = Uri.https(
+      'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
 
   @override
   Widget build(BuildContext context) {
@@ -223,8 +224,14 @@ class _ProfileState extends ConsumerState<Profile> {
                             onPressed: () async {
                               //Is this working?
                               XFile? result = await ImagePicker.platform
-                                  .getImage(source: ImageSource.gallery);
+                                  .getImageFromSource(
+                                      source: ImageSource.gallery);
                               if (result != null) {
+                                // var firebase_Store = FirebaseStorage.instance
+                                //     .ref()
+                                //     .child('student_images')
+                                //     .child('${user['email']}.jpg');
+                                // await firebase_Store.putFile();
                                 // File file = File(result.files.single.path);
                                 print('path is ${result.path}');
                               } else {

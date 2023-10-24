@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -38,8 +40,8 @@ class AllJobsList extends ConsumerWidget {
     Future<void> apply(String cName) async {
       var flag = 0;
       List temp = [];
-      final url =
-          Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
+      final url = Uri.https(
+          'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
 
       final getResponse = await http.get(url);
 
@@ -66,12 +68,31 @@ class AllJobsList extends ConsumerWidget {
           }
           if (flag == 0) {
             final urlupdate = Uri.https(
-                'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs/$id.json');
+                'tnp-portal-63ea2-default-rtdb.firebaseio.com',
+                'jobs/$id.json');
             temp.add(user['email']);
-            await http.patch(urlupdate,
+            var check = await http.patch(urlupdate,
                 body: json.encode({
                   'applicants': temp,
                 }));
+                
+            if (check.statusCode == 200) {
+              return showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Success'),
+                  content: const Text('Succesfully applied for this job role'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                      },
+                      child: const Text('Okay'),
+                    ),
+                  ],
+                ),
+              );
+            }
           }
         }
       }
