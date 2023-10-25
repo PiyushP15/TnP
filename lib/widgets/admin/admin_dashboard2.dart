@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +25,6 @@ class _AdminDashboard2 extends State<AdminDashboard2> {
   void initState() {
     super.initState();
     methodcall = methodcall + 1;
-    // Call your method here, it will be called automatically when the widget loads.
     if (methodcall == 1) {
       getStudentCount();
       getApplicantsCount();

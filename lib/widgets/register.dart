@@ -234,8 +234,9 @@ class _RegisterState extends ConsumerState<Register> {
         ),
       );
       try{
-      var usrCredentials=await _firebase.createUserWithEmailAndPassword(email: userEmail, password: userPass);
+      await _firebase.createUserWithEmailAndPassword(email: userEmail, password: userPass);
       }
+      // ignore: unused_catch_clause
       on FirebaseAuthException catch(e)
       {
         showDialog(
@@ -243,7 +244,7 @@ class _RegisterState extends ConsumerState<Register> {
       builder: (ctx) => AlertDialog(
         title: const Text('SignUp Error'),
         content: const Text(
-            'Authentication failed'),
+            'Authentication failed!'),
         actions: [
           TextButton(
             onPressed: () {

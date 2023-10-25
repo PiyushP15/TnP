@@ -74,7 +74,7 @@ class _LoginState extends ConsumerState<Login> {
         }
       }
       try {
-        var usrlogin = await _firebase.signInWithEmailAndPassword(
+        await _firebase.signInWithEmailAndPassword(
             email: userEmail, password: userPass);
       } catch (e) {
        return showDialog(
