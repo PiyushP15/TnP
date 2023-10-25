@@ -2,33 +2,98 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-int a = 0;
-Future<void> getCount() async {
+  int studentCount = 0;
+  int totalApplicants = 0;
+  int jobCount = 0;
+  int methodcall = 0;
+List companyData = [];
+
+class AdminDashboard2 extends StatefulWidget {
+  const AdminDashboard2({super.key});
+
+  @override
+  State<AdminDashboard2> createState() => _AdminDashboard2();
+}
+
+class _AdminDashboard2 extends State<AdminDashboard2> {
+  
+
+
+  @override
+  void initState() {
+    super.initState();
+    methodcall = methodcall + 1;
+    // Call your method here, it will be called automatically when the widget loads.
+    if (methodcall == 1) {
+      getStudentCount();
+      getApplicantsCount();
+      getJobCount();
+      getCompanyData();
+    }
+  }
+
+  Future<void> getStudentCount() async {
     final url = Uri.https(
         'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
     final getResponse = await http.get(url);
     final Map getData = json.decode(getResponse.body);
-    
-    for (final x in getData.entries) {
-      a = a + 1;
-    }
-    print(a);
-  }
-class AdminDashboard extends StatelessWidget {
-  const AdminDashboard({super.key});
 
+    for (final x in getData.entries) {
+      studentCount = studentCount + 1;
+    }
+    studentCount--;
+  }
+
+  Future<void> getApplicantsCount() async {
+    final urljob =
+        Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
+    final getResponseJob = await http.get(urljob);
+    final Map getDataJob = json.decode(getResponseJob.body);
+    for (final x in getDataJob.entries) {
+      for (final a in x.value['applicants']) {
+        if (a == null || a == "a") {
+          continue;
+        }
+        totalApplicants = totalApplicants + 1;
+      }
+    }
+  }
+
+  Future<void> getJobCount() async {
+    final urljob =
+        Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
+    final getResponseJob = await http.get(urljob);
+    final Map getDataJob = json.decode(getResponseJob.body);
+    for (final x in getDataJob.entries) {
+      jobCount = jobCount + 1;
+    }
+  }
+
+  Future<void> getCompanyData() async {
+    final urljob =
+        Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
+    final getResponseJob = await http.get(urljob);
+    final Map getDataJob = json.decode(getResponseJob.body);
+    for (final x in getDataJob.entries) {
+      List tempList = [];
+      int tempCount = 0;
+      tempList.add(x.value['cname']);
+      for (final a in x.value['applicants']) {
+        if (a == null || a == "a") {
+          continue;
+        }
+        tempCount = tempCount + 1;
+      }
+      tempList.add(tempCount.toString());
+      tempList.add('0');
+      companyData.add(tempList);
+    }
+  }
 
   @override
   Widget build(context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final List dummyData = [
-      ['TCS', '42', '09'],
-      ['Cognizant', '69', '20'],
-      ['Wipro', '69', '20'],
-      ['IntegriChain', '69', '20'],
-      ['Kanaka', '69', '20'],
-      ['Accenture', '69', '20'],
-    ];
+    final List dummyData = companyData;
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -70,8 +135,8 @@ class AdminDashboard extends StatelessWidget {
                             ? const EdgeInsets.fromLTRB(150, 5, 150, 5)
                             : const EdgeInsets.fromLTRB(20, 5, 20, 5),
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -100,10 +165,10 @@ class AdminDashboard extends StatelessWidget {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.symmetric(vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
                                         child: Text(
-                                          a.toString(),
+                                          studentCount.toString(),
                                           style: const TextStyle(
                                             color: Color(0xFF96031A),
                                             fontSize: 24,
@@ -128,15 +193,15 @@ class AdminDashboard extends StatelessWidget {
                         margin: screenWidth > 1080
                             ? const EdgeInsets.fromLTRB(150, 5, 150, 5)
                             : const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                        child: const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
-                                  Row(
+                                  const Row(
                                     children: [
                                       SizedBox(
                                         // width: 150,
@@ -159,11 +224,11 @@ class AdminDashboard extends StatelessWidget {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
                                         child: Text(
-                                          "69",
-                                          style: TextStyle(
+                                          jobCount.toString(),
+                                          style: const TextStyle(
                                             color: Color(0xFF96031A),
                                             fontSize: 24,
                                             fontWeight: FontWeight.w500,
@@ -187,15 +252,15 @@ class AdminDashboard extends StatelessWidget {
                         margin: screenWidth > 1080
                             ? const EdgeInsets.fromLTRB(150, 5, 150, 5)
                             : const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                        child: const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
-                                  Row(
+                                  const Row(
                                     children: [
                                       SizedBox(
                                         // width: 150,
@@ -218,11 +283,11 @@ class AdminDashboard extends StatelessWidget {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
                                         child: Text(
-                                          "69",
-                                          style: TextStyle(
+                                          totalApplicants.toString(),
+                                          style: const TextStyle(
                                             color: Color(0xFF96031A),
                                             fontSize: 24,
                                             fontWeight: FontWeight.w500,
