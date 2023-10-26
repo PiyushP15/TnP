@@ -6,6 +6,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:tnp_portal/widgets/homepage.dart';
 import 'package:tnp_portal/widgets/my_applications.dart';
 import 'package:tnp_portal/widgets/profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SharedLayout extends ConsumerStatefulWidget {
   const SharedLayout({super.key});
@@ -105,6 +106,7 @@ class _SharedLayout extends ConsumerState<SharedLayout> {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
+                FirebaseAuth.instance.signOut();
                 changePage('logout');
                 // Navigator.pushReplacement(context,
                 //     MaterialPageRoute(builder: (context) => const Display()));
