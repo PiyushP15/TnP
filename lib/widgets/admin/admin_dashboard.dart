@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-int studentCount = 0;
-int totalApplicants = 0;
-int jobCount = 0;
-int methodcall = 0;
+  int studentCount = 0;
+  int totalApplicants = 0;
+  int jobCount = 0;
+  int methodcall = 0;
 List companyData = [];
 
 class AdminDashboard extends StatefulWidget {
@@ -18,10 +18,14 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboard extends State<AdminDashboard> {
+
+
+
   @override
   void initState() {
     super.initState();
     methodcall = methodcall + 1;
+    // Call your method here, it will be called automatically when the widget loads.
     if (methodcall == 1) {
       getStudentCount();
       getApplicantsCount();
@@ -330,64 +334,15 @@ class _AdminDashboard extends State<AdminDashboard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        Card(
-                          color: const Color(0XFFFAA916),
-                          margin: screenWidth > 1080
-                              ? const EdgeInsets.fromLTRB(150, 5, 150, 5)
-                              : const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: const [
-                                        SizedBox(
-                                          // width: 150,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 5),
-                                            child: Text(
-                                              textAlign: TextAlign.center,
-                                              "Registered Users",
-                                              style: TextStyle(
-                                                color: Color(0xFF96031A),
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          child: Text(
-                                            studentCount.toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xFF96031A),
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 30),
+                      child: Text(
+                        'Company',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF96031A)),
+                      ),
                     ),
                     SizedBox(width: screenWidth < 1080 ? 100 : 950),
                     const Padding(
@@ -461,38 +416,36 @@ class _AdminDashboard extends State<AdminDashboard> {
                                   ),
                                 ),
                               ),
-                              const Spacer(),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: Text(
-                                  dummyData[index][1],
-                                  style: const TextStyle(
-                                    color: Color(0xFF96031A),
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: screenWidth < 1080 ? 40 : 100,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: Text(
-                                  dummyData[index][2],
-                                  style: const TextStyle(
-                                    color: Color(0xFF96031A),
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: screenWidth < 1080 ? 10 : 20,
-                              ),
                             ],
+                          ),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Text(
+                              dummyData[index][1],
+                              style: const TextStyle(
+                                color: Color(0xFF96031A),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: screenWidth < 1080 ? 40 : 100,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Text(
+                              dummyData[index][2],
+                              style: const TextStyle(
+                                color: Color(0xFF96031A),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: screenWidth < 1080 ? 10 : 20,
                           ),
                         ],
                       ),

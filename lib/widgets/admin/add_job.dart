@@ -43,8 +43,6 @@ class _AddJobState extends State<AddJob> {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Please Enter All Details'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -68,7 +66,7 @@ class _AddJobState extends State<AddJob> {
               'description': description,
               'applicants': appl,
             }));
-          
+
           dept.clear();
       }
     }

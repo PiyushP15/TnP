@@ -2,29 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:tnp_portal/models/all_jobs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:tnp_portal/widgets/admin/admin_layout.dart';
 import 'package:tnp_portal/widgets/admin/applicants.dart';
 
 class AdminJobsList extends StatelessWidget {
   const AdminJobsList({super.key, required this.allJobs});
-
   final List<AllJobs> allJobs;
-
   @override
   Widget build(context) {
     // ignore: unused_local_variable
     var flag = 0;
     final screenWidth = MediaQuery.of(context).size.width;
     final displayWords = screenWidth > 1080 ? 400 : 100;
-
     Future<void> handleDelete(String cName, String pos) async {
-      final url =
-          Uri.https('tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
-
+      final url = Uri.https(
+          'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
       final getResponse = await http.get(url);
       final Map allData = json.decode(getResponse.body);
-
       for (final i in allData.entries) {
         if ((cName == i.value['cname']) && (pos == i.value['position'])) {
           final id = i.key;
@@ -191,12 +185,14 @@ class AdminJobsList extends StatelessWidget {
                                           onPressed: () =>
                                               Navigator.pop(context),
                                         ),
-                                        screenWidth<1080?const Spacer():const SizedBox(width: 10),
+                                        
+                                        screenWidth < 1080
+                                            ? const Spacer()
+                                            : const SizedBox(width: 10),
                                         ElevatedButton(
                                           child: const Text('See Applicants'),
                                           onPressed: () {
                                             print(allJobs[index].applicants);
-
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -207,7 +203,10 @@ class AdminJobsList extends StatelessWidget {
                                                                 .companyName)));
                                           },
                                         ),
-                                        screenWidth<1080?const Spacer():const SizedBox(width: 10),
+                                       
+                                        screenWidth < 1080
+                                            ? const Spacer()
+                                            : const SizedBox(width: 10),
                                         ElevatedButton(
                                           style: const ButtonStyle(
                                               backgroundColor:
