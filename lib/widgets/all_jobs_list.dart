@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 
 import 'dart:convert';
 
@@ -24,6 +24,24 @@ class AllJobsList extends ConsumerWidget {
         builder: (ctx) => AlertDialog(
           title: const Text('Error'),
           content: const Text('You have already applied for this job post.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+    void criteria_error() {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('You do not match the required criteria for this job'),
           actions: [
             TextButton(
               onPressed: () {
@@ -62,10 +80,30 @@ class AllJobsList extends ConsumerWidget {
               flag = 1;
               //Applicant already applied
               applicationfailed();
-
               break;
             }
           }
+          if(flag==0)
+          {
+          if(double.parse(i.value['ssc_criteria']).toDouble()>=double.parse(user['ssc']!))
+          {
+            flag=1;
+            criteria_error();
+            break;
+          }
+          else if(double.parse(i.value['hsc_criteria']).toDouble()>=double.parse(user['hsc']!))
+          {
+            flag=1;
+            criteria_error();
+            break;
+          }
+          else if(double.parse(i.value['grad_criteria']).toDouble()>=double.parse(user['grad']!))
+          {
+            flag=1;
+            criteria_error();
+            break;
+          }
+        }
           if (flag == 0) {
             final urlupdate = Uri.https(
                 'tnp-portal-63ea2-default-rtdb.firebaseio.com',

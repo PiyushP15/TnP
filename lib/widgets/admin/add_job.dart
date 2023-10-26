@@ -38,6 +38,7 @@ class _AddJobState extends State<AddJob> {
       final ssc = sscHandler.text;
       final hsc = hscHandler.text;
       final ug = ugHandler.text;
+      
 
       if (name.isEmpty || position.isEmpty || description.isEmpty || ssc.isEmpty || hsc.isEmpty || ug.isEmpty || dept.isEmpty || dept.isEmpty) {
         showDialog(
@@ -56,6 +57,7 @@ class _AddJobState extends State<AddJob> {
         return;
       } else {
         final appl = ['a'];
+        
         final myurl = Uri.https(
             'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'jobs.json');
         await http.post(myurl,
@@ -65,6 +67,10 @@ class _AddJobState extends State<AddJob> {
               'position': position,
               'description': description,
               'applicants': appl,
+              'ssc_criteria':ssc,
+              'hsc_criteria':hsc,
+              'grad_criteria':ug,
+              'departmets':dept,
             }));
 
           dept.clear();
