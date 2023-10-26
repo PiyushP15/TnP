@@ -57,6 +57,7 @@ class _AdminLayout extends ConsumerState<AdminLayout> {
   @override
   Widget build(context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('TnP')),
       drawer: Drawer(
         child: ListView(

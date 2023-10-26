@@ -4,8 +4,22 @@ import 'package:tnp_portal/widgets/admin/admin_layout.dart';
 import 'dart:convert';
 import 'package:tnp_portal/widgets/custom_text_field.dart';
 
-class AddJob extends StatelessWidget {
+class AddJob extends StatefulWidget {
   const AddJob({super.key});
+
+  @override
+  State<AddJob> createState() => _AddJobState();
+}
+
+class _AddJobState extends State<AddJob> {
+  var mca = false;
+  var it = false;
+  var cs = false;
+  var etc = false;
+  var mech = false;
+
+  List dept = [];
+
 
   @override
   Widget build(context) {
@@ -13,13 +27,19 @@ class AddJob extends StatelessWidget {
     final positionHandler = TextEditingController();
     final descriptionHandler =
         TextEditingController(text: 'Enter Job Description Here');
+    final sscHandler = TextEditingController(text: '35');
+    final hscHandler = TextEditingController(text: '35');
+    final ugHandler = TextEditingController(text: '35');
 
     Future<void> onSubmit() async {
       final name = nameHandler.text;
       final position = positionHandler.text;
       final description = descriptionHandler.text;
+      final ssc = sscHandler.text;
+      final hsc = hscHandler.text;
+      final ug = ugHandler.text;
 
-      if (name.isEmpty || position.isEmpty || description.isEmpty) {
+      if (name.isEmpty || position.isEmpty || description.isEmpty || ssc.isEmpty || hsc.isEmpty || ug.isEmpty || dept.isEmpty || dept.isEmpty) {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -48,6 +68,8 @@ class AddJob extends StatelessWidget {
               'description': description,
               'applicants': appl,
             }));
+          
+          dept.clear();
       }
     }
 
@@ -86,7 +108,7 @@ class AddJob extends StatelessWidget {
               ),
             ],
           ),
-          Expanded(
+          Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               child: TextFormField(
@@ -102,6 +124,157 @@ class AddJob extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 10,),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Add Criteira',
+              style: TextStyle(
+                fontSize: 24,
+                color: Color(0xFF96031A),
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  'SSC',
+                  cont: sscHandler,
+                  obscure: false,
+                  keyboard: TextInputType.text,
+                ),
+              ),
+              Expanded(
+                child: CustomTextField(
+                  'HSC',
+                  cont: hscHandler,
+                  obscure: false,
+                  keyboard: TextInputType.text,
+                ),
+              ),
+              Expanded(
+                child: CustomTextField(
+                  'UG',
+                  cont: ugHandler,
+                  obscure: false,
+                  keyboard: TextInputType.text,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width+280),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: CheckboxListTile(
+                    title: const Text("MCA"),
+                    value: mca,
+                    onChanged: (newValue) {
+                      setState(() {
+                        mca = newValue!;
+                      });
+                      if(mca == true){
+                          dept.add('MCA');
+                        }
+                        else{
+                          dept.remove('MCA');
+                        }
+                        print(dept);
+                      // print(mca);
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+                  ),
+                  Flexible(
+                    child: CheckboxListTile(
+                    title: const Text("IT"),
+                    value: it,
+                    onChanged: (newValue) {
+                      setState(() {
+                        it = newValue!;
+                      });
+                        if(it == true){
+                          dept.add('IT');
+                        }
+                        else{
+                          dept.remove('IT');
+                        }
+                        print(dept);
+                      // print(mca);
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+                  ),
+                  Flexible(
+                    child: CheckboxListTile(
+                    title: const Text("ETC"),
+                    value: etc,
+                    onChanged: (newValue) {
+                      setState(() {
+                        etc = newValue!;
+                      });
+                        if(etc == true){
+                          dept.add('ETC');
+                        }
+                        else{
+                          dept.remove('ETC');
+                        }
+                          print(dept);
+                      // print(mca);
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+                  ),
+                  Flexible(
+                    child: CheckboxListTile(
+                    title: const Text("CS"),
+                    value: cs,
+                    onChanged: (newValue) {
+                      setState(() {
+                        cs = newValue!;
+                      });
+                        if(cs == true){
+                          dept.add('CS');
+                        }
+                        else{
+                          dept.remove('CS');
+                        }
+                        print(dept);
+                      // print(mca);
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+                  ),
+                  Flexible(
+                    child: CheckboxListTile(
+                    title: const Text("Mech"),
+                    value: mech,
+                    onChanged: (newValue) {
+                      setState(() {
+                        mech = newValue!;
+                      });
+                        if(mech == true){
+                          dept.add('MECH');
+                        }
+                        else{
+                          dept.remove('MECH');
+                        }
+                        print(dept);
+                      // print(mca);
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 20,),
           ElevatedButton(
             onPressed: () {
               onSubmit();
