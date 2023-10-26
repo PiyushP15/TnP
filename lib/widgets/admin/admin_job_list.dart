@@ -191,9 +191,7 @@ class AdminJobsList extends StatelessWidget {
                                           onPressed: () =>
                                               Navigator.pop(context),
                                         ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
+                                        screenWidth<1080?const Spacer():const SizedBox(width: 10),
                                         ElevatedButton(
                                           child: const Text('See Applicants'),
                                           onPressed: () {
@@ -209,9 +207,7 @@ class AdminJobsList extends StatelessWidget {
                                                                 .companyName)));
                                           },
                                         ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
+                                        screenWidth<1080?const Spacer():const SizedBox(width: 10),
                                         ElevatedButton(
                                           style: const ButtonStyle(
                                               backgroundColor:
