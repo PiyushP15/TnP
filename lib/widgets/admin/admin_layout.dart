@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tnp_portal/providers/user_provider.dart';
+import 'package:tnp_portal/widgets/admin/admin_dashboard2.dart';
 import 'package:tnp_portal/widgets/admin/all_users.dart';
 import 'package:tnp_portal/widgets/display.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import 'package:tnp_portal/widgets/admin/admin_dashboard.dart';
+
 import 'package:tnp_portal/widgets/admin/add_job.dart';
 import 'package:tnp_portal/widgets/homepage.dart';
 
@@ -18,12 +19,12 @@ class AdminLayout extends ConsumerStatefulWidget {
 }
 
 class _AdminLayout extends ConsumerState<AdminLayout> {
-  Widget _currentPage = const AdminDashboard();
+  Widget _currentPage = const AdminDashboard2();
 
   void changePage(String page) {
     if (page == 'homepage') {
       setState(() {
-        _currentPage = const AdminDashboard();
+        _currentPage = const AdminDashboard2();
         Navigator.pop(context);
       });
     }

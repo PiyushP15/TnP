@@ -30,7 +30,7 @@ class _ApplicantsState extends ConsumerState<Applicants> {
 
   Future<void> getstudents() async {
     List<AllStudents> temp = [];
-    print('Process Started');
+   
     final url = Uri.https(
         'tnp-portal-63ea2-default-rtdb.firebaseio.com', 'register.json');
     final urljob =
